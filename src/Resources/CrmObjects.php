@@ -22,18 +22,47 @@ final class CrmObjects extends Resource
     }
 
     /**
+     * $idProperty reads by a unique property instead of the record id, e.g.
+     * get('jane@example.com', idProperty: 'email'), without using a search call.
+     *
      * @param  list<string>  $properties
      * @param  list<string>  $propertiesWithHistory
+     * @param  list<string>  $associations  object types whose associated ids to include
      * @return array<mixed>|object
      */
-    public function get(string $id, array $properties = [], array $propertiesWithHistory = []): array|object
-    {
-        return $this->client->request('GET', "{$this->base()}/{$id}", [
+    public function get(
+        string $id,
+        array $properties = [],
+        array $propertiesWithHistory = [],
+        array $associations = [],
+        ?string $idProperty = null,
+    ): array|object {
+        return $this->client->request('GET', "{$this->base()}/".rawurlencode($id), [
             'query' => $this->filterNull([
                 'properties' => $properties ? implode(',', $properties) : null,
                 'propertiesWithHistory' => $propertiesWithHistory ? implode(',', $propertiesWithHistory) : null,
+                'associations' => $associations ? implode(',', $associations) : null,
+                'idProperty' => $idProperty,
             ]),
         ]);
+    }
+
+    /**
+     * Like get(), but null when the record does not exist.
+     *
+     * @param  list<string>  $properties
+     * @param  list<string>  $propertiesWithHistory
+     * @param  list<string>  $associations
+     * @return array<mixed>|object|null
+     */
+    public function find(
+        string $id,
+        array $properties = [],
+        array $propertiesWithHistory = [],
+        array $associations = [],
+        ?string $idProperty = null,
+    ): array|object|null {
+        return $this->orNull(fn () => $this->get($id, $properties, $propertiesWithHistory, $associations, $idProperty));
     }
 
     /**

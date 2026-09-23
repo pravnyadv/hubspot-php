@@ -6,10 +6,12 @@ namespace HubSpot;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\TransferStats;
 use HubSpot\Api\AutomationApi;
 use HubSpot\Api\CmsApi;
 use HubSpot\Api\CommerceApi;
@@ -20,12 +22,16 @@ use HubSpot\Api\MarketingApi;
 use HubSpot\Api\SettingsApi;
 use HubSpot\Contracts\AuthProvider;
 use HubSpot\Exceptions\ApiException;
-use HubSpot\Exceptions\RateLimitException;
+use HubSpot\Exceptions\ConnectionException;
 use HubSpot\Middleware\RetryMiddleware;
 use HubSpot\Resources\AccountInfo;
 use HubSpot\Resources\Files;
 use HubSpot\Resources\Scheduler;
+use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
+use Throwable;
 
 /**
  * The HTTP data-plane transport: attaches the bearer token, retries transient
@@ -46,20 +52,42 @@ final class Client
 
     private readonly ClientInterface $http;
 
+    /** @var array<string, mixed> */
+    private array $context;
+
+    /**
+     * @param  array<string, mixed>  $context  added to every log line and exception, e.g. ['request_id' => ..., 'portal_id' => ...]
+     * @param  array<int|string, callable>  $middleware  Guzzle middleware for the default stack (string keys name them)
+     */
     public function __construct(
         private readonly AuthProvider $auth,
         ?ClientInterface $http = null,
         private readonly string $version = self::DEFAULT_VERSION,
         int $maxRetries = 3,
         private readonly ResponseFormat $responseFormat = ResponseFormat::Object,
+        array $context = [],
+        private readonly ?LoggerInterface $logger = null,
+        array $middleware = [],
     ) {
-        $this->http = $http ?? self::defaultHttpClient($maxRetries);
+        if ($http !== null && $middleware !== []) {
+            throw new InvalidArgumentException('Pass either middleware or a custom http client; push the middleware onto your own client\'s handler stack instead.');
+        }
+
+        $this->context = $context;
+        $this->http = $http ?? self::defaultHttpClient($maxRetries, $middleware);
     }
 
-    public static function defaultHttpClient(int $maxRetries = 3): GuzzleClient
+    /** @param  array<int|string, callable>  $middleware */
+    public static function defaultHttpClient(int $maxRetries = 3, array $middleware = []): GuzzleClient
     {
         $stack = HandlerStack::create();
         $stack->push(RetryMiddleware::create($maxRetries));
+
+        // Inside the retry middleware, so each runs once per attempt: a rate
+        // limiter counts every request HubSpot actually receives.
+        foreach ($middleware as $name => $fn) {
+            $stack->push($fn, is_string($name) ? $name : '');
+        }
 
         return new GuzzleClient([
             'base_uri' => self::BASE_URI,
@@ -77,6 +105,27 @@ final class Client
     }
 
     /**
+     * A copy whose logs and exceptions also carry $context (e.g. a job's ids),
+     * sharing this client's auth and HTTP connection.
+     *
+     * @param  array<string, mixed>  $context
+     */
+    public function withContext(array $context): self
+    {
+        $clone = clone $this;
+        $clone->context = $context + $this->context;
+
+        return $clone;
+    }
+
+    public function __clone()
+    {
+        // Resource groups hold the client that built them, so a copy builds its own.
+        $this->crm = $this->cms = $this->marketing = $this->commerce = null;
+        $this->events = $this->settings = $this->automation = $this->conversations = null;
+    }
+
+    /**
      * Send a request and return the raw PSR-7 response. The escape hatch for
      * non-JSON endpoints (e.g. CMS source-code file downloads).
      *
@@ -87,12 +136,10 @@ final class Client
         try {
             $response = $this->http->request($method, ltrim($path, '/'), $this->prepareOptions($options));
         } catch (GuzzleException $e) {
-            // http_errors is off, so a GuzzleException here is a transport
-            // failure (DNS, connection), not an HTTP status.
-            throw new ApiException(0, null, 'HubSpot request failed: '.$e->getMessage(), $e);
+            throw $this->mapFailure($e, $method, $path);
         }
 
-        return $this->ensureSuccessful($response);
+        return $this->ensureSuccessful($response, $method, $path);
     }
 
     /**
@@ -105,8 +152,10 @@ final class Client
      */
     public function sendAsync(string $method, string $path, array $options = []): PromiseInterface
     {
-        return $this->http->requestAsync($method, ltrim($path, '/'), $this->prepareOptions($options))
-            ->then(fn (ResponseInterface $response): ResponseInterface => $this->ensureSuccessful($response));
+        return $this->http->requestAsync($method, ltrim($path, '/'), $this->prepareOptions($options))->then(
+            fn (ResponseInterface $response): ResponseInterface => $this->ensureSuccessful($response, $method, $path),
+            fn (Throwable $reason) => throw $this->mapFailure($reason, $method, $path),
+        );
     }
 
     public function responseFormat(): ResponseFormat
@@ -270,38 +319,93 @@ final class Client
             );
         }
 
+        // on_stats fires once per attempt, retries included, with timing.
+        if ($this->logger !== null) {
+            $callerStats = $options['on_stats'] ?? null;
+            $options['on_stats'] = function (TransferStats $stats) use ($callerStats): void {
+                $this->logTransfer($stats);
+                if (is_callable($callerStats)) {
+                    $callerStats($stats);
+                }
+            };
+        }
+
         return $options;
     }
 
-    private function ensureSuccessful(ResponseInterface $response): ResponseInterface
+    private function logTransfer(TransferStats $stats): void
     {
-        $status = $response->getStatusCode();
-        if ($status >= 400) {
-            throw $this->mapError($status, $response);
+        $request = $stats->getRequest();
+        $response = $stats->getResponse();
+        $status = $response?->getStatusCode();
+        $path = $request->getUri()->getPath();
+        $error = $stats->getHandlerErrorData();
+
+        $context = $this->requestContext($request->getMethod(), $path, $response) + array_filter([
+            'status' => $status,
+            'duration_ms' => $stats->getTransferTime() !== null ? (int) round($stats->getTransferTime() * 1000) : null,
+            'error' => $error instanceof Throwable ? $error->getMessage() : null,
+        ], static fn (mixed $value): bool => $value !== null);
+
+        $level = match (true) {
+            $status === null, $status === 429, $status >= 500 => LogLevel::WARNING,
+            $status >= 400 => LogLevel::INFO,
+            default => LogLevel::DEBUG,
+        };
+
+        $this->logger?->log($level, sprintf('HubSpot %s %s %s', $request->getMethod(), $path, $status ?? 'no response'), $context);
+    }
+
+    /**
+     * The client's context plus what identifies this request. Query strings are
+     * left out: they can carry emails and other personal data.
+     *
+     * @return array<string, mixed>
+     */
+    private function requestContext(string $method, string $path, ?ResponseInterface $response = null): array
+    {
+        return $this->context + array_filter([
+            'method' => $method,
+            'path' => '/'.ltrim(strtok($path, '?') ?: '', '/'),
+            'correlation_id' => $response?->getHeaderLine('X-HubSpot-Correlation-Id') ?: null,
+        ], static fn (mixed $value): bool => $value !== null);
+    }
+
+    private function ensureSuccessful(ResponseInterface $response, string $method, string $path): ResponseInterface
+    {
+        if ($response->getStatusCode() >= 400) {
+            throw $this->mapError($response, $method, $path);
         }
 
         return $response;
     }
 
-    private function mapError(int $status, ResponseInterface $response): ApiException
+    private function mapError(ResponseInterface $response, string $method, string $path): ApiException
     {
-        $raw = (string) $response->getBody();
+        return ApiException::fromResponse(
+            $response->getStatusCode(),
+            (string) $response->getBody(),
+            $this->requestContext($method, $path, $response),
+            $response->hasHeader('Retry-After') ? (int) $response->getHeaderLine('Retry-After') : null,
+        );
+    }
 
-        if ($status === 429) {
-            $body = ApiException::decodeBody($raw);
-            $retryAfter = $response->hasHeader('Retry-After')
-                ? (int) $response->getHeaderLine('Retry-After')
-                : null;
-
-            return new RateLimitException(
-                $retryAfter,
-                $status,
-                $body,
-                ApiException::messageFrom($body) ?? "HubSpot rate limit hit (HTTP {$status})",
-            );
+    /**
+     * Guzzle's own exceptions become ours. Anything else (e.g. an app
+     * middleware's rate-limit exception) passes through untouched.
+     */
+    private function mapFailure(Throwable $e, string $method, string $path): Throwable
+    {
+        // Only a caller-supplied client with http_errors on throws for a status.
+        if ($e instanceof BadResponseException) {
+            return $this->mapError($e->getResponse(), $method, $path);
         }
 
-        return ApiException::fromResponse($status, $raw);
+        if ($e instanceof GuzzleException) {
+            return new ConnectionException(0, null, 'HubSpot request failed: '.$e->getMessage(), $this->requestContext($method, $path), $e);
+        }
+
+        return $e;
     }
 
     /** @return array<mixed>|object */

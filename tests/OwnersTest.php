@@ -68,3 +68,21 @@ it('version override changes the date segment in the path', function () {
 
     expect($mock->getLastRequest()->getUri()->getPath())->toBe('/crm/owners/2026-03');
 });
+
+it('page() filters by email and archived when given', function () {
+    [$client, $mock] = mockClient([jsonResponse(200, ['results' => []])]);
+
+    $client->crm()->owners()->page(email: 'owner@example.com', archived: false);
+
+    parse_str($mock->getLastRequest()->getUri()->getQuery(), $query);
+    expect($query)->toMatchArray(['email' => 'owner@example.com', 'archived' => 'false']);
+});
+
+it('get() looks an owner up by user id with idProperty', function () {
+    [$client, $mock] = mockClient([jsonResponse(200, ['id' => '42'])]);
+
+    $client->crm()->owners()->get('9001', 'userId');
+
+    expect($mock->getLastRequest()->getUri()->getPath())->toBe('/crm/owners/2026-09/9001');
+    expect($mock->getLastRequest()->getUri()->getQuery())->toBe('idProperty=userId');
+});

@@ -13,14 +13,18 @@ use Throwable;
  */
 final class RateLimitException extends ApiException
 {
-    /** @param  array<mixed>|null  $body */
+    /**
+     * @param  array<mixed>|null  $body
+     * @param  array<string, mixed>  $context
+     */
     public function __construct(
-        public readonly ?int $retryAfter,
         int $status,
         ?array $body,
         string $message,
+        array $context = [],
         ?Throwable $previous = null,
+        public readonly ?int $retryAfter = null,
     ) {
-        parent::__construct($status, $body, $message, $previous);
+        parent::__construct($status, $body, $message, $context, $previous);
     }
 }

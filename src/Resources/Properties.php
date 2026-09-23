@@ -19,6 +19,16 @@ final class Properties extends Resource
     }
 
     /**
+     * Like get(), but null when the property does not exist.
+     *
+     * @return array<mixed>|object|null
+     */
+    public function find(string $objectType, string $propertyName): array|object|null
+    {
+        return $this->orNull(fn () => $this->get($objectType, $propertyName));
+    }
+
+    /**
      * @param  array<string, mixed>  $property
      * @return array<mixed>|object
      */

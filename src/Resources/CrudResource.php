@@ -39,6 +39,16 @@ abstract class CrudResource extends Resource
     }
 
     /**
+     * Like get(), but null when the record does not exist.
+     *
+     * @return array<mixed>|object|null
+     */
+    public function find(string $id): array|object|null
+    {
+        return $this->orNull(fn () => $this->get($id));
+    }
+
+    /**
      * @param  array<string, mixed>  $body
      * @return array<mixed>|object
      */

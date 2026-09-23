@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace HubSpot\Resources;
 
+use Closure;
 use HubSpot\Client;
+use HubSpot\Exceptions\NotFoundException;
 
 /**
  * Base for every resource. Holds the Client and resolves the date-based version
@@ -39,6 +41,22 @@ abstract class Resource
     protected function filterNull(array $params): array
     {
         return array_filter($params, static fn ($value): bool => $value !== null);
+    }
+
+    /**
+     * Run a read, returning null when HubSpot answers 404. Every other failure
+     * still throws, so an outage or rate limit never reads as "not there".
+     *
+     * @param  Closure(): (array<mixed>|object)  $read
+     * @return array<mixed>|object|null
+     */
+    protected function orNull(Closure $read): array|object|null
+    {
+        try {
+            return $read();
+        } catch (NotFoundException) {
+            return null;
+        }
     }
 
     /**

@@ -179,3 +179,19 @@ it('addAndRemoveMembers() PUTs the split body; removeAllMembers() DELETEs', func
     expect($mock->getLastRequest()->getMethod())->toBe('DELETE');
     expect($mock->getLastRequest()->getUri()->getPath())->toBe('/crm/lists/2026-09/5/memberships');
 });
+
+it('search sends the optional spec fields only when given', function () {
+    [$client, $mock] = mockClient([jsonResponse(200, ['lists' => []])]);
+
+    $client->crm()->lists()->search('vip', 50, offset: 50, sort: 'HS_CREATED_AT', objectTypeId: '0-1', processingTypes: ['MANUAL'], listIds: ['7']);
+
+    expect(json_decode((string) $mock->getLastRequest()->getBody(), true))->toBe([
+        'query' => 'vip',
+        'count' => 50,
+        'offset' => 50,
+        'sort' => 'HS_CREATED_AT',
+        'objectTypeId' => '0-1',
+        'processingTypes' => ['MANUAL'],
+        'listIds' => ['7'],
+    ]);
+});

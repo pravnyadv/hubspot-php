@@ -7,31 +7,61 @@ namespace HubSpot\Exceptions;
 use Throwable;
 
 /**
- * A non-2xx response from HubSpot. Carries the HTTP status and the decoded
- * response body so callers can inspect HubSpot's error detail.
+ * A failed HubSpot request. fromResponse() picks the subclass for the status,
+ * so callers can catch exactly the failure they handle (NotFoundException,
+ * RateLimitException, ...) or this class for any of them.
  */
 class ApiException extends HubSpotException
 {
-    /** @param  array<mixed>|null  $body */
+    /** The parsed error body, or null when HubSpot sent something else. */
+    public readonly ?HubSpotError $error;
+
+    /**
+     * @param  array<mixed>|null  $body
+     * @param  array<string, mixed>  $context  the client's context plus method and path
+     */
     public function __construct(
         public readonly int $status,
         public readonly ?array $body,
         string $message,
+        private readonly array $context = [],
         ?Throwable $previous = null,
     ) {
         parent::__construct($message, $status, $previous);
+        $this->error = HubSpotError::fromBody($body);
     }
 
-    public static function fromResponse(int $status, string $rawBody, ?Throwable $previous = null): self
+    /** @param  array<string, mixed>  $context */
+    public static function fromResponse(int $status, string $rawBody, array $context = [], ?int $retryAfter = null): self
     {
         $body = self::decodeBody($rawBody);
+        $args = [$status, $body, self::messageFrom($body) ?? "HubSpot API request failed with HTTP {$status}", $context];
 
-        return new self(
-            $status,
-            $body,
-            self::messageFrom($body) ?? "HubSpot API request failed with HTTP {$status}",
-            $previous,
-        );
+        return match (true) {
+            $status === 400, $status === 422 => new ValidationException(...$args),
+            $status === 401 => new AuthenticationException(...$args),
+            $status === 403 => new ForbiddenException(...$args),
+            $status === 404 => new NotFoundException(...$args),
+            $status === 409 => new ConflictException(...$args),
+            $status === 429 => new RateLimitException(...$args, retryAfter: $retryAfter),
+            $status >= 500 => new ServerException(...$args),
+            default => new self(...$args),
+        };
+    }
+
+    /**
+     * Structured log context for this failure. Laravel's exception handler
+     * merges an exception's context() into the log entry automatically.
+     *
+     * @return array<string, mixed>
+     */
+    public function context(): array
+    {
+        return $this->context + array_filter([
+            'status' => $this->status,
+            'category' => $this->error?->category,
+            'correlation_id' => $this->error?->correlationId,
+        ], static fn (mixed $value): bool => $value !== null);
     }
 
     /** @return array<mixed>|null */

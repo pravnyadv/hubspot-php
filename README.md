@@ -7,7 +7,7 @@
 
 A small, framework-free PHP client for HubSpot's date-based API versions (`2026-09` and later). The official SDK still calls the numbered versions HubSpot is retiring in 2027; this maps every resource to its correct dated path, read from HubSpot's own OpenAPI catalog.
 
-Plain `stdClass`/array responses (no model classes), a grouped facade, per-family version pinning, auto-refreshing OAuth, idempotency-aware retries, cursor pagination, typed exceptions, webhook verification, and async with a concurrency pool.
+Plain `stdClass`/array responses (no model classes), a grouped facade, per-family version pinning, auto-refreshing OAuth, idempotency-aware retries, cursor pagination, typed exceptions parsed from HubSpot's error schema, PSR-3 logging with your own context, webhook verification, and async with a concurrency pool.
 
 ## Install
 
@@ -42,6 +42,14 @@ $client->events()  $client->settings()  $client->files()  $client->account()  $c
 ```
 
 Anything without a typed method is still reachable: `$client->request('GET', '/crm/objects/2026-09/tickets/456')`.
+
+### Records that may not exist
+
+`get()` throws `NotFoundException` on a 404. `find()` returns null instead, and still throws on every other failure, so a rate limit or outage never looks like a missing record.
+
+```php
+$contact = $client->crm()->contacts()->find('jane@example.com', ['email'], idProperty: 'email');
+```
 
 ### Pagination
 
@@ -121,9 +129,54 @@ $results = $client->pool(
 );
 ```
 
-## Errors and retries
+## Errors
 
-Everything extends `HubSpot\Exceptions\HubSpotException`: `ApiException` (`->status`, `->body`, and HubSpot's own validation message), `RateLimitException` (`->retryAfter`), `AuthenticationException`. Transient failures retry with backoff, honoring `Retry-After`. A 429 retries on any method; a 5xx or dropped connection only on idempotent methods (never a POST/PATCH), so a create is never duplicated. Tune with `maxRetries` (`0` turns it off).
+Every failed request throws an `ApiException` subclass picked by status, so you catch what you actually handle:
+
+| Status | Exception | Extra |
+|---|---|---|
+| 400, 422 | `ValidationException` | |
+| 401 | `AuthenticationException` | also OAuth refresh failures |
+| 403 | `ForbiddenException` | `->missingScopes()` |
+| 404 | `NotFoundException` | |
+| 409 | `ConflictException` | `->existingId()` |
+| 429 | `RateLimitException` | `->retryAfter` |
+| 5xx | `ServerException` | |
+| none | `ConnectionException` | DNS, timeout; status 0 |
+
+Each one has `->status`, `->body`, and `->error`: HubSpot's error body parsed into a `HubSpotError` (`category`, `subCategory`, `correlationId`, `context`, `errors`), the same shape across every API. `getMessage()` is HubSpot's own message, with the first field error pulled out of validation failures.
+
+```php
+try {
+    $client->crm()->contacts()->create(['email' => $email]);
+} catch (ConflictException $e) {
+    $id = $e->existingId();
+} catch (ForbiddenException $e) {
+    $reauthorize = $e->missingScopes();
+}
+```
+
+Transient failures retry with backoff, honoring `Retry-After`. A 429 retries on any method; a 5xx or dropped connection only on idempotent methods (never a POST/PATCH), so a create is never duplicated. Tune with `maxRetries` (`0` turns it off).
+
+## Logging and context
+
+Pass any PSR-3 logger and whatever ids you trace by. Every attempt is logged once (debug on success, info on a 4xx, warning on a 429, 5xx or dropped connection) with method, path, status, duration and HubSpot's correlation id. Bodies, query strings and the token are never logged, though a path can hold an id you looked up by, such as an email with `idProperty: 'email'`.
+
+```php
+$client = HubSpot::withAccessToken($token, logger: $logger, context: ['portal_id' => $portalId]);
+
+$job = $client->withContext(['request_id' => $requestId]);   // a copy for one job
+```
+
+The same context is on every exception through `$e->context()`, which Laravel merges into the log entry when it reports the exception.
+
+## Middleware
+
+Guzzle middleware added here runs once per attempt, inside the retries, so a rate limiter counts every request HubSpot receives. Exceptions it throws reach you untouched.
+
+```php
+$client = HubSpot::withAccessToken($token, middleware: ['rate_limit' => $limiter]);
+```
 
 ## Keeping paths current
 
