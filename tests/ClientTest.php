@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use GuzzleHttp\Psr7\Response;
 use HubSpot\Exceptions\ApiException;
 use HubSpot\Exceptions\RateLimitException;
 
@@ -13,6 +14,36 @@ it('attaches the bearer token and returns a decoded array', function () {
     expect($result)->toBe(['id' => '1', 'ok' => true]);
     expect($mock->getLastRequest()->getHeaderLine('Authorization'))->toBe('Bearer test-token');
     expect($mock->getLastRequest()->getUri()->getPath())->toBe('/crm/objects/2026-09/contacts/1');
+});
+
+it('request() defaults Accept to application/json', function () {
+    [$client, $mock] = mockClient([jsonResponse(200, ['ok' => true])]);
+
+    $client->request('GET', '/crm/objects/2026-09/contacts/1');
+
+    expect($mock->getLastRequest()->getHeaderLine('Accept'))->toBe('application/json');
+});
+
+it('request() respects an explicit Accept header instead of overriding it', function () {
+    [$client, $mock] = mockClient([jsonResponse(200, ['ok' => true])]);
+
+    $client->request('GET', '/crm/objects/2026-09/contacts/1', ['headers' => ['Accept' => 'text/plain']]);
+
+    expect($mock->getLastRequest()->getHeaderLine('Accept'))->toBe('text/plain');
+});
+
+/**
+ * send() must NOT default Accept to application/json: HubSpot's CMS Source Code
+ * download endpoint (which send() exists for — see its docblock) 406s on that
+ * header. Confirmed live against a real portal (2026-09-24).
+ */
+it('send() does not force an Accept header, unlike request()', function () {
+    [$client, $mock] = mockClient([new Response(200, [], 'raw file contents')]);
+
+    $body = (string) $client->send('GET', '/cms/source-code/2026-09/published/content/theme/x.html')->getBody();
+
+    expect($body)->toBe('raw file contents');
+    expect($mock->getLastRequest()->hasHeader('Accept'))->toBeFalse();
 });
 
 it('maps a 429 to a RateLimitException carrying Retry-After and status', function () {
