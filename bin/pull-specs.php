@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * Dev harness: resolve HubSpot's date-based OpenAPI specs from the public spec
- * catalog and distil them into docs/verified-paths.{json,md} — the ground-truth
+ * catalog and distil them into docs/verified-paths.{json,md}, the ground-truth
  * path map this package is built against.
  *
  * Run: php bin/pull-specs.php
@@ -21,7 +21,7 @@ const OUT_MD = __DIR__.'/../docs/verified-paths.md';
 
 /**
  * The APIs this package covers, keyed by our short name. `version` is a regex
- * anchoring which release we pull — the version segment is product-specific
+ * anchoring which release we pull. The version segment is product-specific
  * (CRM is 2026-09, Forms is 2026-09-beta, OAuth is 2026-03), it is NOT a global
  * date prefix, so each entry pins its own.
  */
@@ -166,7 +166,7 @@ foreach ($result as $key => $r) {
 }
 $md .= "\n";
 foreach ($result as $key => $r) {
-    $md .= "## {$key} ({$r['group']} / {$r['name']}) — `{$r['version']}`\n\n";
+    $md .= "## {$key} ({$r['group']} / {$r['name']}): `{$r['version']}`\n\n";
     foreach ($r['paths'] as $p) {
         $md .= "- `{$p}`\n";
     }

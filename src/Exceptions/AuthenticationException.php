@@ -8,29 +8,23 @@ use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
- * The OAuth token endpoint rejected the request (bad code, expired refresh
- * token, wrong client secret). Thrown by OAuthClient, which runs before an
- * access token exists and so can't go through Client's normal error mapping.
+ * A 401 from the API, or the OAuth token endpoint rejecting a code or refresh
+ * token (bad code, revoked refresh token, wrong client secret).
  */
-final class AuthenticationException extends HubSpotException
+final class AuthenticationException extends ApiException
 {
     public static function fromGuzzleException(GuzzleException $e): self
     {
         $status = 0;
+        $body = null;
         $detail = $e->getMessage();
 
         if ($e instanceof BadResponseException) {
-            $response = $e->getResponse();
-            $status = $response->getStatusCode();
-            $decoded = json_decode((string) $response->getBody(), true);
-            if (is_array($decoded)) {
-                $detail = $decoded['message']
-                    ?? $decoded['error_description']
-                    ?? $decoded['error']
-                    ?? $detail;
-            }
+            $status = $e->getResponse()->getStatusCode();
+            $body = self::decodeBody((string) $e->getResponse()->getBody());
+            $detail = $body['message'] ?? $body['error_description'] ?? $body['error'] ?? $detail;
         }
 
-        return new self("HubSpot OAuth token request failed: {$detail}", $status, $e);
+        return new self($status, $body, 'HubSpot OAuth token request failed: '.(is_string($detail) ? $detail : 'unknown error'), previous: $e);
     }
 }

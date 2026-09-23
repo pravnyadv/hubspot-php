@@ -9,16 +9,33 @@ use HubSpot\Pagination\Paginator;
 final class Lists extends Resource
 {
     /**
+     * $objectTypeId filters server-side, e.g. '0-1' for contact lists only.
+     *
      * @param  list<string>  $additionalProperties
+     * @param  list<string>  $processingTypes  MANUAL, DYNAMIC, SNAPSHOT
+     * @param  list<string>  $listIds
      * @return array<mixed>|object
      */
-    public function search(string $query, int $count = 100, array $additionalProperties = []): array|object
-    {
+    public function search(
+        string $query,
+        int $count = 100,
+        array $additionalProperties = [],
+        ?int $offset = null,
+        ?string $sort = null,
+        ?string $objectTypeId = null,
+        array $processingTypes = [],
+        array $listIds = [],
+    ): array|object {
         return $this->client->request('POST', "/crm/lists/{$this->version()}/search", [
             'json' => $this->filterNull([
                 'query' => $query,
                 'count' => $count,
                 'additionalProperties' => $additionalProperties ?: null,
+                'offset' => $offset,
+                'sort' => $sort,
+                'objectTypeId' => $objectTypeId,
+                'processingTypes' => $processingTypes ?: null,
+                'listIds' => $listIds ?: null,
             ]),
         ]);
     }
@@ -27,6 +44,16 @@ final class Lists extends Resource
     public function get(string $listId): array|object
     {
         return $this->client->request('GET', "/crm/lists/{$this->version()}/{$listId}");
+    }
+
+    /**
+     * Like get(), but null when the list does not exist.
+     *
+     * @return array<mixed>|object|null
+     */
+    public function find(string $listId): array|object|null
+    {
+        return $this->orNull(fn () => $this->get($listId));
     }
 
     /** @return array<mixed>|object */

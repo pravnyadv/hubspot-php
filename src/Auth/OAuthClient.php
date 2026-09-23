@@ -12,7 +12,7 @@ use HubSpot\Exceptions\AuthenticationException;
 use HubSpot\Middleware\RetryMiddleware;
 
 /**
- * The OAuth token endpoint itself — exchanging a code or refresh token for
+ * The OAuth token endpoint itself, exchanging a code or refresh token for
  * an access token. Deliberately separate from Client: this call happens
  * before you have an access token, so it can't depend on AuthProvider.
  */
@@ -113,8 +113,9 @@ final class OAuthClient
 
         if (! is_array($data) || ! isset($data['access_token'])) {
             throw new AuthenticationException(
-                'HubSpot token response did not contain an access_token.',
                 $response->getStatusCode(),
+                is_array($data) ? $data : null,
+                'HubSpot token response did not contain an access_token.',
             );
         }
 

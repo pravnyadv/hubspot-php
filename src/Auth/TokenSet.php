@@ -6,7 +6,7 @@ namespace HubSpot\Auth;
 
 /**
  * An OAuth access/refresh token pair with its expiry, as returned by the
- * token endpoint. Immutable — a refresh produces a new instance.
+ * token endpoint. Immutable: a refresh produces a new instance.
  */
 final class TokenSet
 {

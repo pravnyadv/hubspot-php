@@ -8,18 +8,38 @@ use HubSpot\Pagination\Paginator;
 
 final class Owners extends Resource
 {
-    /** @return array<mixed>|object */
-    public function page(int $limit = 100, ?string $after = null): array|object
+    /**
+     * $email narrows the page to the owner with that email.
+     *
+     * @return array<mixed>|object
+     */
+    public function page(int $limit = 100, ?string $after = null, ?string $email = null, ?bool $archived = null): array|object
     {
         return $this->client->request('GET', "/crm/owners/{$this->version()}", [
-            'query' => $this->filterNull(['limit' => $limit, 'after' => $after]),
+            'query' => $this->filterNull(['limit' => $limit, 'after' => $after, 'email' => $email, 'archived' => $archived]),
         ]);
     }
 
-    /** @return array<mixed>|object */
-    public function get(string $ownerId): array|object
+    /**
+     * @param  'id'|'userId'|null  $idProperty  'userId' looks the owner up by their HubSpot user id
+     * @return array<mixed>|object
+     */
+    public function get(string $ownerId, ?string $idProperty = null): array|object
     {
-        return $this->client->request('GET', "/crm/owners/{$this->version()}/{$ownerId}");
+        return $this->client->request('GET', "/crm/owners/{$this->version()}/{$ownerId}", [
+            'query' => $this->filterNull(['idProperty' => $idProperty]),
+        ]);
+    }
+
+    /**
+     * Like get(), but null when there is no such owner.
+     *
+     * @param  'id'|'userId'|null  $idProperty
+     * @return array<mixed>|object|null
+     */
+    public function find(string $ownerId, ?string $idProperty = null): array|object|null
+    {
+        return $this->orNull(fn () => $this->get($ownerId, $idProperty));
     }
 
     public function all(int $limit = 100): Paginator

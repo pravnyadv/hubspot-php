@@ -22,7 +22,7 @@ final class OAuthAuth implements AuthProvider
     {
         if ($this->tokens->isExpired()) {
             if ($this->tokens->refreshToken === null) {
-                throw new AuthenticationException('Cannot refresh: no refresh token', 0);
+                throw new AuthenticationException(0, null, 'Cannot refresh: no refresh token');
             }
             $new = $this->oauth->refresh($this->clientId, $this->clientSecret, $this->tokens->refreshToken);
             $this->tokens = $new;
