@@ -146,17 +146,25 @@ Every failed request throws an `ApiException` subclass picked by status, so you 
 
 Each one has `->status`, `->body`, and `->error`: HubSpot's error body parsed into a `HubSpotError` (`category`, `subCategory`, `correlationId`, `context`, `errors`), the same shape across every API. `getMessage()` is HubSpot's own message, with the first field error pulled out of validation failures.
 
+Transient failures retry with backoff, honoring `Retry-After`. A 429 retries on any method; a 5xx or dropped connection only on idempotent methods (never a POST/PATCH), so a create is never duplicated. Tune with `maxRetries` (`0` turns it off).
+
+### Handling failures
+
+The client throws on failure; it never returns null or false instead. Catch only what you can act on, and let the rest reach your job or error handler, where a retry is usually right.
+
 ```php
+// A record that may not exist needs no try/catch.
+$contact = $client->crm()->contacts()->find($id);
+
+// A failure you can act on: catch just that one.
 try {
     $client->crm()->contacts()->create(['email' => $email]);
 } catch (ConflictException $e) {
-    $id = $e->existingId();
-} catch (ForbiddenException $e) {
-    $reauthorize = $e->missingScopes();
+    $client->crm()->contacts()->update($e->existingId() ?? throw $e, $properties);
 }
 ```
 
-Transient failures retry with backoff, honoring `Retry-After`. A 429 retries on any method; a 5xx or dropped connection only on idempotent methods (never a POST/PATCH), so a create is never duplicated. Tune with `maxRetries` (`0` turns it off).
+Avoid `catch (ApiException) { return null; }`. It turns a rate limit or an outage into "not found", and whatever acts on that null then does the wrong thing quietly. In a queue job, catch `RateLimitException` and re-queue it after `->retryAfter` seconds.
 
 ## Logging and context
 
