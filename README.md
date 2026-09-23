@@ -3,7 +3,7 @@
 [![Tests](https://github.com/pravnyadv/hubspot-php/actions/workflows/tests.yml/badge.svg)](https://github.com/pravnyadv/hubspot-php/actions/workflows/tests.yml)
 [![Latest Version](https://img.shields.io/packagist/v/pravnyadv/hubspot-php.svg)](https://packagist.org/packages/pravnyadv/hubspot-php)
 [![PHP Version](https://img.shields.io/packagist/php-v/pravnyadv/hubspot-php.svg)](https://packagist.org/packages/pravnyadv/hubspot-php)
-[![License](https://img.shields.io/packagist/l/pravnyadv/hubspot-php.svg)](LICENSE)
+[![License](https://img.shields.io/github/license/pravnyadv/hubspot-php.svg)](LICENSE)
 
 A small, framework-free PHP client for HubSpot's date-based API versions (`2026-09` and later). The official SDK still calls the numbered versions HubSpot is retiring in 2027; this maps every resource to its correct dated path, read from HubSpot's own OpenAPI catalog.
 
@@ -141,4 +141,4 @@ Releases are automated via [release-please](https://github.com/googleapis/releas
 
 ## License
 
-MIT.
+[MIT](LICENSE).
