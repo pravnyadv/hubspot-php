@@ -15,7 +15,7 @@ Plain `stdClass`/array responses (no model classes), a grouped facade, per-famil
 composer require pravnyadv/hubspot-php
 ```
 
-PHP 8.2+, Guzzle 7 or 8.
+PHP 8.3+, Guzzle 7 or 8.
 
 ## Usage
 
