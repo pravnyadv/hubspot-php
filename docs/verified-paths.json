@@ -1,0 +1,877 @@
+{
+    "crm-objects": {
+        "group": "CRM",
+        "name": "Custom Objects",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/165137/version/2026-09",
+        "paths": [
+            "/crm/objects/2026-09/{objectType}",
+            "/crm/objects/2026-09/{objectType}/batch/archive",
+            "/crm/objects/2026-09/{objectType}/batch/create",
+            "/crm/objects/2026-09/{objectType}/batch/read",
+            "/crm/objects/2026-09/{objectType}/batch/update",
+            "/crm/objects/2026-09/{objectType}/batch/upsert",
+            "/crm/objects/2026-09/{objectType}/gdpr-delete",
+            "/crm/objects/2026-09/{objectType}/merge",
+            "/crm/objects/2026-09/{objectType}/search",
+            "/crm/objects/2026-09/{objectType}/{objectId}"
+        ]
+    },
+    "crm-lists": {
+        "group": "CRM",
+        "name": "Lists",
+        "version": "2026-09",
+        "stage": "PUBLIC_BETA",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/184424/version/2026-09",
+        "paths": [
+            "/crm/lists/2026-09",
+            "/crm/lists/2026-09/all",
+            "/crm/lists/2026-09/folders",
+            "/crm/lists/2026-09/folders/move-list",
+            "/crm/lists/2026-09/folders/{folderId}",
+            "/crm/lists/2026-09/folders/{folderId}/move/{newParentFolderId}",
+            "/crm/lists/2026-09/folders/{folderId}/rename",
+            "/crm/lists/2026-09/idmapping",
+            "/crm/lists/2026-09/object-type-id/{objectTypeId}/name/{listName}",
+            "/crm/lists/2026-09/records/memberships/batch/read",
+            "/crm/lists/2026-09/records/{objectTypeId}/{recordId}/memberships",
+            "/crm/lists/2026-09/search",
+            "/crm/lists/2026-09/{listId}",
+            "/crm/lists/2026-09/{listId}/memberships",
+            "/crm/lists/2026-09/{listId}/memberships/add",
+            "/crm/lists/2026-09/{listId}/memberships/add-and-remove",
+            "/crm/lists/2026-09/{listId}/memberships/add-from/{sourceListId}",
+            "/crm/lists/2026-09/{listId}/memberships/join-order",
+            "/crm/lists/2026-09/{listId}/memberships/remove",
+            "/crm/lists/2026-09/{listId}/restore",
+            "/crm/lists/2026-09/{listId}/schedule-conversion",
+            "/crm/lists/2026-09/{listId}/size-and-edits-history/between",
+            "/crm/lists/2026-09/{listId}/update-list-filters",
+            "/crm/lists/2026-09/{listId}/update-list-name"
+        ]
+    },
+    "crm-owners": {
+        "group": "CRM",
+        "name": "Crm Owners",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211252/version/2026-09",
+        "paths": [
+            "/crm/owners/2026-09",
+            "/crm/owners/2026-09/{ownerId}"
+        ]
+    },
+    "crm-props": {
+        "group": "CRM",
+        "name": "Properties",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211231/version/2026-09",
+        "paths": [
+            "/crm/properties/2026-09/{objectType}",
+            "/crm/properties/2026-09/{objectType}/batch/archive",
+            "/crm/properties/2026-09/{objectType}/batch/create",
+            "/crm/properties/2026-09/{objectType}/batch/read",
+            "/crm/properties/2026-09/{objectType}/groups",
+            "/crm/properties/2026-09/{objectType}/groups/{groupName}",
+            "/crm/properties/2026-09/{objectType}/{propertyName}"
+        ]
+    },
+    "account-info": {
+        "group": "Account",
+        "name": "Account Info",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/138942/version/2026-09",
+        "paths": [
+            "/account-info/2026-09/api-usage/daily/private-apps",
+            "/account-info/2026-09/details"
+        ]
+    },
+    "forms": {
+        "group": "Marketing",
+        "name": "Forms",
+        "version": "2026-09-beta",
+        "stage": "PUBLIC_BETA",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/75368/version/2026-09-beta",
+        "paths": [
+            "/marketing/forms/2026-09-beta",
+            "/marketing/forms/2026-09-beta/{formId}"
+        ]
+    },
+    "cms-pages": {
+        "group": "CMS",
+        "name": "Pages",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211242/version/2026-09",
+        "paths": [
+            "/cms/pages/2026-09/landing-pages",
+            "/cms/pages/2026-09/landing-pages/ab-test/create-variation",
+            "/cms/pages/2026-09/landing-pages/ab-test/end",
+            "/cms/pages/2026-09/landing-pages/ab-test/rerun",
+            "/cms/pages/2026-09/landing-pages/batch/archive",
+            "/cms/pages/2026-09/landing-pages/batch/create",
+            "/cms/pages/2026-09/landing-pages/batch/read",
+            "/cms/pages/2026-09/landing-pages/batch/update",
+            "/cms/pages/2026-09/landing-pages/clone",
+            "/cms/pages/2026-09/landing-pages/folders",
+            "/cms/pages/2026-09/landing-pages/folders/batch/archive",
+            "/cms/pages/2026-09/landing-pages/folders/batch/create",
+            "/cms/pages/2026-09/landing-pages/folders/batch/read",
+            "/cms/pages/2026-09/landing-pages/folders/batch/update",
+            "/cms/pages/2026-09/landing-pages/folders/{objectId}",
+            "/cms/pages/2026-09/landing-pages/folders/{objectId}/revisions",
+            "/cms/pages/2026-09/landing-pages/folders/{objectId}/revisions/{revisionId}",
+            "/cms/pages/2026-09/landing-pages/folders/{objectId}/revisions/{revisionId}/restore",
+            "/cms/pages/2026-09/landing-pages/multi-language/attach-to-lang-group",
+            "/cms/pages/2026-09/landing-pages/multi-language/create-language-variation",
+            "/cms/pages/2026-09/landing-pages/multi-language/detach-from-lang-group",
+            "/cms/pages/2026-09/landing-pages/multi-language/set-new-lang-primary",
+            "/cms/pages/2026-09/landing-pages/multi-language/update-languages",
+            "/cms/pages/2026-09/landing-pages/schedule",
+            "/cms/pages/2026-09/landing-pages/{objectId}",
+            "/cms/pages/2026-09/landing-pages/{objectId}/draft",
+            "/cms/pages/2026-09/landing-pages/{objectId}/draft/push-live",
+            "/cms/pages/2026-09/landing-pages/{objectId}/draft/reset",
+            "/cms/pages/2026-09/landing-pages/{objectId}/revisions",
+            "/cms/pages/2026-09/landing-pages/{objectId}/revisions/{revisionId}",
+            "/cms/pages/2026-09/landing-pages/{objectId}/revisions/{revisionId}/restore",
+            "/cms/pages/2026-09/landing-pages/{objectId}/revisions/{revisionId}/restore-to-draft",
+            "/cms/pages/2026-09/site-pages",
+            "/cms/pages/2026-09/site-pages/ab-test/create-variation",
+            "/cms/pages/2026-09/site-pages/ab-test/end",
+            "/cms/pages/2026-09/site-pages/ab-test/rerun",
+            "/cms/pages/2026-09/site-pages/batch/archive",
+            "/cms/pages/2026-09/site-pages/batch/create",
+            "/cms/pages/2026-09/site-pages/batch/read",
+            "/cms/pages/2026-09/site-pages/batch/update",
+            "/cms/pages/2026-09/site-pages/clone",
+            "/cms/pages/2026-09/site-pages/multi-language/attach-to-lang-group",
+            "/cms/pages/2026-09/site-pages/multi-language/create-language-variation",
+            "/cms/pages/2026-09/site-pages/multi-language/detach-from-lang-group",
+            "/cms/pages/2026-09/site-pages/multi-language/set-new-lang-primary",
+            "/cms/pages/2026-09/site-pages/multi-language/update-languages",
+            "/cms/pages/2026-09/site-pages/schedule",
+            "/cms/pages/2026-09/site-pages/{objectId}",
+            "/cms/pages/2026-09/site-pages/{objectId}/draft",
+            "/cms/pages/2026-09/site-pages/{objectId}/draft/push-live",
+            "/cms/pages/2026-09/site-pages/{objectId}/draft/reset",
+            "/cms/pages/2026-09/site-pages/{objectId}/revisions",
+            "/cms/pages/2026-09/site-pages/{objectId}/revisions/{revisionId}",
+            "/cms/pages/2026-09/site-pages/{objectId}/revisions/{revisionId}/restore",
+            "/cms/pages/2026-09/site-pages/{objectId}/revisions/{revisionId}/restore-to-draft"
+        ]
+    },
+    "cms-source": {
+        "group": "CMS",
+        "name": "Source Code",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211245/version/2026-09",
+        "paths": [
+            "/cms/source-code/2026-09/extract/async",
+            "/cms/source-code/2026-09/extract/async/tasks/{taskId}/status",
+            "/cms/source-code/2026-09/{environment}/content/{path}",
+            "/cms/source-code/2026-09/{environment}/metadata/{path}",
+            "/cms/source-code/2026-09/{environment}/validate/{path}"
+        ]
+    },
+    "associations": {
+        "group": "CRM",
+        "name": "Associations",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/165139/version/2026-09",
+        "paths": [
+            "/crm/associations/2026-09/definitions/configurations/all",
+            "/crm/associations/2026-09/definitions/configurations/{fromObjectType}/{toObjectType}",
+            "/crm/associations/2026-09/definitions/configurations/{fromObjectType}/{toObjectType}/batch/create",
+            "/crm/associations/2026-09/definitions/configurations/{fromObjectType}/{toObjectType}/batch/purge",
+            "/crm/associations/2026-09/definitions/configurations/{fromObjectType}/{toObjectType}/batch/update",
+            "/crm/associations/2026-09/usage/high-usage-report/{userId}",
+            "/crm/associations/2026-09/{fromObjectType}/{toObjectType}/batch/archive",
+            "/crm/associations/2026-09/{fromObjectType}/{toObjectType}/batch/associate/default",
+            "/crm/associations/2026-09/{fromObjectType}/{toObjectType}/batch/create",
+            "/crm/associations/2026-09/{fromObjectType}/{toObjectType}/batch/labels/archive",
+            "/crm/associations/2026-09/{fromObjectType}/{toObjectType}/batch/read",
+            "/crm/associations/2026-09/{fromObjectType}/{toObjectType}/labels",
+            "/crm/associations/2026-09/{fromObjectType}/{toObjectType}/labels/{associationTypeId}",
+            "/crm/objects/2026-09/{fromObjectType}/{fromObjectId}/associations/default/{toObjectType}/{toObjectId}",
+            "/crm/objects/2026-09/{objectType}",
+            "/crm/objects/2026-09/{objectType}/batch/archive",
+            "/crm/objects/2026-09/{objectType}/batch/create",
+            "/crm/objects/2026-09/{objectType}/batch/read",
+            "/crm/objects/2026-09/{objectType}/batch/update",
+            "/crm/objects/2026-09/{objectType}/batch/upsert",
+            "/crm/objects/2026-09/{objectType}/gdpr-delete",
+            "/crm/objects/2026-09/{objectType}/merge",
+            "/crm/objects/2026-09/{objectType}/search",
+            "/crm/objects/2026-09/{objectType}/{objectId}",
+            "/crm/objects/2026-09/{objectType}/{objectId}/associations/{toObjectType}",
+            "/crm/objects/2026-09/{objectType}/{objectId}/associations/{toObjectType}/{toObjectId}"
+        ]
+    },
+    "timeline": {
+        "group": "CRM",
+        "name": "Timeline",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211262/version/2026-09",
+        "paths": [
+            "/integrators/timeline/2026-09/events",
+            "/integrators/timeline/2026-09/events/batch",
+            "/integrators/timeline/2026-09/types/projects"
+        ]
+    },
+    "pipelines": {
+        "group": "CRM",
+        "name": "Pipelines",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/165192/version/2026-09",
+        "paths": [
+            "/crm/pipelines/2026-09/{objectType}",
+            "/crm/pipelines/2026-09/{objectType}/{pipelineId}",
+            "/crm/pipelines/2026-09/{objectType}/{pipelineId}/audit",
+            "/crm/pipelines/2026-09/{objectType}/{pipelineId}/stages",
+            "/crm/pipelines/2026-09/{objectType}/{pipelineId}/stages/{stageId}",
+            "/crm/pipelines/2026-09/{objectType}/{pipelineId}/stages/{stageId}/audit"
+        ]
+    },
+    "schemas": {
+        "group": "CRM",
+        "name": "Schemas",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211261/version/2026-09",
+        "paths": [
+            "/crm-object-schemas/2026-09/schemas",
+            "/crm-object-schemas/2026-09/schemas/batch/read",
+            "/crm-object-schemas/2026-09/schemas/{objectType}",
+            "/crm-object-schemas/2026-09/schemas/{objectType}/associations",
+            "/crm-object-schemas/2026-09/schemas/{objectType}/associations/{associationIdentifier}"
+        ]
+    },
+    "files": {
+        "group": "Files",
+        "name": "Files",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/143236/version/2026-09",
+        "paths": [
+            "/files/2026-09/files",
+            "/files/2026-09/files/import-from-url/async",
+            "/files/2026-09/files/import-from-url/async/tasks/{taskId}/status",
+            "/files/2026-09/files/search",
+            "/files/2026-09/files/stat/{path}",
+            "/files/2026-09/files/{fileId}",
+            "/files/2026-09/files/{fileId}/download",
+            "/files/2026-09/files/{fileId}/gdpr-delete",
+            "/files/2026-09/files/{fileId}/signed-url",
+            "/files/2026-09/folders",
+            "/files/2026-09/folders/search",
+            "/files/2026-09/folders/{folderId}",
+            "/files/2026-09/folders/{folderPath}"
+        ]
+    },
+    "comm-prefs": {
+        "group": "Communication Preferences",
+        "name": "Subscriptions",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211265/version/2026-09",
+        "paths": [
+            "/communication-preferences/2026-09/definitions",
+            "/communication-preferences/2026-09/links/generate",
+            "/communication-preferences/2026-09/statuses/batch/read",
+            "/communication-preferences/2026-09/statuses/batch/unsubscribe-all",
+            "/communication-preferences/2026-09/statuses/batch/unsubscribe-all/read",
+            "/communication-preferences/2026-09/statuses/batch/write",
+            "/communication-preferences/2026-09/statuses/{subscriberIdString}",
+            "/communication-preferences/2026-09/statuses/{subscriberIdString}/unsubscribe-all"
+        ]
+    },
+    "conversations": {
+        "group": "Conversations",
+        "name": "Conversations",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/75320/version/2026-09",
+        "paths": [
+            "/conversations/conversations/2026-09/actors/batch/read",
+            "/conversations/conversations/2026-09/actors/{actorId}",
+            "/conversations/conversations/2026-09/channel-accounts",
+            "/conversations/conversations/2026-09/channel-accounts/{channelAccountId}",
+            "/conversations/conversations/2026-09/channels",
+            "/conversations/conversations/2026-09/channels/{channelId}",
+            "/conversations/conversations/2026-09/inboxes",
+            "/conversations/conversations/2026-09/inboxes/{inboxId}",
+            "/conversations/conversations/2026-09/threads",
+            "/conversations/conversations/2026-09/threads/{threadId}",
+            "/conversations/conversations/2026-09/threads/{threadId}/assignee",
+            "/conversations/conversations/2026-09/threads/{threadId}/messages",
+            "/conversations/conversations/2026-09/threads/{threadId}/messages/{messageId}",
+            "/conversations/conversations/2026-09/threads/{threadId}/messages/{messageId}/original-content"
+        ]
+    },
+    "automation": {
+        "group": "Automation",
+        "name": "Automation V4",
+        "version": "2026-09-beta",
+        "stage": "PUBLIC_BETA",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/75354/version/2026-09-beta",
+        "paths": [
+            "/automation/2026-09-beta/action-types",
+            "/automation/2026-09-beta/flows",
+            "/automation/2026-09-beta/flows/batch/read",
+            "/automation/2026-09-beta/flows/email-campaigns",
+            "/automation/2026-09-beta/flows/{flowId}",
+            "/automation/2026-09-beta/flows/{flowId}/revisions/{revisionId}",
+            "/automation/2026-09-beta/workflow-id-mappings/batch/read"
+        ]
+    },
+    "blog-posts": {
+        "group": "CMS",
+        "name": "Posts",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211243/version/2026-09",
+        "paths": [
+            "/cms/blogs/2026-09/authors/cursor",
+            "/cms/blogs/2026-09/authors/cursor/query",
+            "/cms/blogs/2026-09/posts",
+            "/cms/blogs/2026-09/posts/batch/archive",
+            "/cms/blogs/2026-09/posts/batch/create",
+            "/cms/blogs/2026-09/posts/batch/read",
+            "/cms/blogs/2026-09/posts/batch/update",
+            "/cms/blogs/2026-09/posts/clone",
+            "/cms/blogs/2026-09/posts/cursor",
+            "/cms/blogs/2026-09/posts/cursor/query",
+            "/cms/blogs/2026-09/posts/multi-language/attach-to-lang-group",
+            "/cms/blogs/2026-09/posts/multi-language/create-language-variation",
+            "/cms/blogs/2026-09/posts/multi-language/detach-from-lang-group",
+            "/cms/blogs/2026-09/posts/multi-language/set-new-lang-primary",
+            "/cms/blogs/2026-09/posts/multi-language/update-languages",
+            "/cms/blogs/2026-09/posts/schedule",
+            "/cms/blogs/2026-09/posts/{objectId}",
+            "/cms/blogs/2026-09/posts/{objectId}/draft",
+            "/cms/blogs/2026-09/posts/{objectId}/draft/push-live",
+            "/cms/blogs/2026-09/posts/{objectId}/draft/reset",
+            "/cms/blogs/2026-09/posts/{objectId}/revisions",
+            "/cms/blogs/2026-09/posts/{objectId}/revisions/{revisionId}",
+            "/cms/blogs/2026-09/posts/{objectId}/revisions/{revisionId}/restore",
+            "/cms/blogs/2026-09/posts/{objectId}/revisions/{revisionId}/restore-to-draft",
+            "/cms/blogs/2026-09/tags/cursor",
+            "/cms/blogs/2026-09/tags/cursor/query"
+        ]
+    },
+    "blog-authors": {
+        "group": "CMS",
+        "name": "Authors",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211237/version/2026-09",
+        "paths": [
+            "/cms/blogs/2026-09/authors",
+            "/cms/blogs/2026-09/authors/batch/archive",
+            "/cms/blogs/2026-09/authors/batch/create",
+            "/cms/blogs/2026-09/authors/batch/read",
+            "/cms/blogs/2026-09/authors/batch/update",
+            "/cms/blogs/2026-09/authors/multi-language/attach-to-lang-group",
+            "/cms/blogs/2026-09/authors/multi-language/create-language-variation",
+            "/cms/blogs/2026-09/authors/multi-language/detach-from-lang-group",
+            "/cms/blogs/2026-09/authors/multi-language/set-new-lang-primary",
+            "/cms/blogs/2026-09/authors/multi-language/update-languages",
+            "/cms/blogs/2026-09/authors/{objectId}"
+        ]
+    },
+    "blog-settings": {
+        "group": "CMS",
+        "name": "Blog Settings",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211238/version/2026-09",
+        "paths": [
+            "/cms/blog-settings/2026-09/settings",
+            "/cms/blog-settings/2026-09/settings/multi-language/attach-to-lang-group",
+            "/cms/blog-settings/2026-09/settings/multi-language/create-language-variation",
+            "/cms/blog-settings/2026-09/settings/multi-language/detach-from-lang-group",
+            "/cms/blog-settings/2026-09/settings/multi-language/set-new-lang-primary",
+            "/cms/blog-settings/2026-09/settings/multi-language/update-languages",
+            "/cms/blog-settings/2026-09/settings/{blogId}",
+            "/cms/blog-settings/2026-09/settings/{blogId}/revisions",
+            "/cms/blog-settings/2026-09/settings/{blogId}/revisions/{revisionId}"
+        ]
+    },
+    "blog-tags": {
+        "group": "CMS",
+        "name": "Tags",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211246/version/2026-09",
+        "paths": [
+            "/cms/blogs/2026-09/authors/cursor",
+            "/cms/blogs/2026-09/authors/cursor/query",
+            "/cms/blogs/2026-09/posts/cursor",
+            "/cms/blogs/2026-09/posts/cursor/query",
+            "/cms/blogs/2026-09/tags",
+            "/cms/blogs/2026-09/tags/batch/archive",
+            "/cms/blogs/2026-09/tags/batch/create",
+            "/cms/blogs/2026-09/tags/batch/read",
+            "/cms/blogs/2026-09/tags/batch/update",
+            "/cms/blogs/2026-09/tags/cursor",
+            "/cms/blogs/2026-09/tags/cursor/query",
+            "/cms/blogs/2026-09/tags/multi-language/attach-to-lang-group",
+            "/cms/blogs/2026-09/tags/multi-language/create-language-variation",
+            "/cms/blogs/2026-09/tags/multi-language/detach-from-lang-group",
+            "/cms/blogs/2026-09/tags/multi-language/set-new-lang-primary",
+            "/cms/blogs/2026-09/tags/multi-language/update-languages",
+            "/cms/blogs/2026-09/tags/{objectId}"
+        ]
+    },
+    "hubdb": {
+        "group": "CMS",
+        "name": "Hubdb",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211250/version/2026-09",
+        "paths": [
+            "/cms/hubdb/2026-09/tables",
+            "/cms/hubdb/2026-09/tables/draft",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/draft",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/draft/clone",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/draft/export",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/draft/import",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/draft/publish",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/draft/reset",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/export",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows/batch/read",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows/draft",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows/draft/batch/clone",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows/draft/batch/create",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows/draft/batch/purge",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows/draft/batch/read",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows/draft/batch/replace",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows/draft/batch/update",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows/{rowId}",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows/{rowId}/draft",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/rows/{rowId}/draft/clone",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/unpublish",
+            "/cms/hubdb/2026-09/tables/{tableIdOrName}/versions/{versionId}"
+        ]
+    },
+    "cms-domains": {
+        "group": "CMS",
+        "name": "Domains",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211240/version/2026-09",
+        "paths": [
+            "/cms/domains/2026-09",
+            "/cms/domains/2026-09/{domainId}"
+        ]
+    },
+    "url-redirects": {
+        "group": "CMS",
+        "name": "Url Redirects",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211248/version/2026-09",
+        "paths": [
+            "/cms/url-redirects/2026-09",
+            "/cms/url-redirects/2026-09/url-mappings",
+            "/cms/url-redirects/2026-09/url-mappings/{id}",
+            "/cms/url-redirects/2026-09/{urlRedirectId}"
+        ]
+    },
+    "marketing-emails": {
+        "group": "Marketing",
+        "name": "Marketing Emails",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211277/version/2026-09",
+        "paths": [
+            "/marketing/emails/2026-09",
+            "/marketing/emails/2026-09/ab-test/create-variation",
+            "/marketing/emails/2026-09/clone",
+            "/marketing/emails/2026-09/statistics/histogram",
+            "/marketing/emails/2026-09/statistics/list",
+            "/marketing/emails/2026-09/{emailId}",
+            "/marketing/emails/2026-09/{emailId}/ab-test/get-variation",
+            "/marketing/emails/2026-09/{emailId}/draft",
+            "/marketing/emails/2026-09/{emailId}/draft/reset",
+            "/marketing/emails/2026-09/{emailId}/publish",
+            "/marketing/emails/2026-09/{emailId}/revisions",
+            "/marketing/emails/2026-09/{emailId}/revisions/{revisionId}",
+            "/marketing/emails/2026-09/{emailId}/revisions/{revisionId}/restore",
+            "/marketing/emails/2026-09/{emailId}/revisions/{revisionId}/restore-to-draft",
+            "/marketing/emails/2026-09/{emailId}/unpublish"
+        ]
+    },
+    "marketing-events": {
+        "group": "Marketing",
+        "name": "Marketing Events",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211271/version/2026-09",
+        "paths": [
+            "/marketing/marketing-events/2026-09",
+            "/marketing/marketing-events/2026-09/associations/{externalAccountId}/{externalEventId}/lists",
+            "/marketing/marketing-events/2026-09/associations/{externalAccountId}/{externalEventId}/lists/{listId}",
+            "/marketing/marketing-events/2026-09/associations/{marketingEventId}/lists",
+            "/marketing/marketing-events/2026-09/associations/{marketingEventId}/lists/{listId}",
+            "/marketing/marketing-events/2026-09/attendance/{externalEventId}/{subscriberState}/create",
+            "/marketing/marketing-events/2026-09/attendance/{externalEventId}/{subscriberState}/email-create",
+            "/marketing/marketing-events/2026-09/batch/archive",
+            "/marketing/marketing-events/2026-09/batch/update",
+            "/marketing/marketing-events/2026-09/events",
+            "/marketing/marketing-events/2026-09/events/delete",
+            "/marketing/marketing-events/2026-09/events/search",
+            "/marketing/marketing-events/2026-09/events/upsert",
+            "/marketing/marketing-events/2026-09/events/{externalEventId}",
+            "/marketing/marketing-events/2026-09/events/{externalEventId}/cancel",
+            "/marketing/marketing-events/2026-09/events/{externalEventId}/complete",
+            "/marketing/marketing-events/2026-09/events/{externalEventId}/{subscriberState}/email-upsert",
+            "/marketing/marketing-events/2026-09/events/{externalEventId}/{subscriberState}/upsert",
+            "/marketing/marketing-events/2026-09/participations/contacts/{contactIdentifier}/breakdown",
+            "/marketing/marketing-events/2026-09/participations/{externalAccountId}/{externalEventId}",
+            "/marketing/marketing-events/2026-09/participations/{externalAccountId}/{externalEventId}/breakdown",
+            "/marketing/marketing-events/2026-09/participations/{marketingEventId}",
+            "/marketing/marketing-events/2026-09/participations/{marketingEventId}/breakdown",
+            "/marketing/marketing-events/2026-09/{appId}/settings",
+            "/marketing/marketing-events/2026-09/{externalEventId}/identifiers",
+            "/marketing/marketing-events/2026-09/{objectId}",
+            "/marketing/marketing-events/2026-09/{objectId}/attendance/{subscriberState}/create",
+            "/marketing/marketing-events/2026-09/{objectId}/attendance/{subscriberState}/email-create"
+        ]
+    },
+    "campaigns": {
+        "group": "Marketing",
+        "name": "Campaigns Public Api",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/122230/version/2026-09",
+        "paths": [
+            "/marketing/campaigns/2026-09",
+            "/marketing/campaigns/2026-09/asset-types",
+            "/marketing/campaigns/2026-09/batch/archive",
+            "/marketing/campaigns/2026-09/batch/create",
+            "/marketing/campaigns/2026-09/batch/read",
+            "/marketing/campaigns/2026-09/batch/update",
+            "/marketing/campaigns/2026-09/clone",
+            "/marketing/campaigns/2026-09/clone/asset-types",
+            "/marketing/campaigns/2026-09/clone/{campaignGuid}/status",
+            "/marketing/campaigns/2026-09/{campaignGuid}",
+            "/marketing/campaigns/2026-09/{campaignGuid}/assets/{assetType}",
+            "/marketing/campaigns/2026-09/{campaignGuid}/assets/{assetType}/{assetId}",
+            "/marketing/campaigns/2026-09/{campaignGuid}/budget",
+            "/marketing/campaigns/2026-09/{campaignGuid}/budget/totals",
+            "/marketing/campaigns/2026-09/{campaignGuid}/budget/{budgetId}",
+            "/marketing/campaigns/2026-09/{campaignGuid}/reports/contacts/{contactType}",
+            "/marketing/campaigns/2026-09/{campaignGuid}/reports/metrics",
+            "/marketing/campaigns/2026-09/{campaignGuid}/reports/revenue",
+            "/marketing/campaigns/2026-09/{campaignGuid}/spend",
+            "/marketing/campaigns/2026-09/{campaignGuid}/spend/{spendId}"
+        ]
+    },
+    "single-send": {
+        "group": "Marketing",
+        "name": "Single-send",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211272/version/2026-09",
+        "paths": [
+            "/marketing/email-campaigns/2026-09/single-send"
+        ]
+    },
+    "transactional": {
+        "group": "Marketing",
+        "name": "Transactional Single Send",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211273/version/2026-09",
+        "paths": [
+            "/marketing/transactional/2026-09/single-email/send",
+            "/marketing/transactional/2026-09/smtp-tokens",
+            "/marketing/transactional/2026-09/smtp-tokens/{tokenId}",
+            "/marketing/transactional/2026-09/smtp-tokens/{tokenId}/password-reset"
+        ]
+    },
+    "automation-actions": {
+        "group": "Automation",
+        "name": "Actions V4",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211234/version/2026-09",
+        "paths": [
+            "/automation/actions/2026-09/{appId}",
+            "/automation/actions/2026-09/{appId}/{definitionId}",
+            "/automation/actions/2026-09/{appId}/{definitionId}/functions",
+            "/automation/actions/2026-09/{appId}/{definitionId}/functions/{functionType}",
+            "/automation/actions/2026-09/{appId}/{definitionId}/functions/{functionType}/{functionId}",
+            "/automation/actions/2026-09/{appId}/{definitionId}/requires-object",
+            "/automation/actions/2026-09/{appId}/{definitionId}/revisions",
+            "/automation/actions/2026-09/{appId}/{definitionId}/revisions/{revisionId}",
+            "/automation/actions/callbacks/2026-09/complete",
+            "/automation/actions/callbacks/2026-09/{callbackId}/complete"
+        ]
+    },
+    "sequences": {
+        "group": "Automation",
+        "name": "Sequences",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/160272/version/2026-09",
+        "paths": [
+            "/automation/sequences/2026-09",
+            "/automation/sequences/2026-09/enrollments",
+            "/automation/sequences/2026-09/enrollments/contact/{contactId}",
+            "/automation/sequences/2026-09/serviceaccounts/enrollments",
+            "/automation/sequences/2026-09/serviceaccounts/sequences",
+            "/automation/sequences/2026-09/serviceaccounts/sequences/{sequenceId}",
+            "/automation/sequences/2026-09/serviceaccounts/sequences/{sequenceId}/performance",
+            "/automation/sequences/2026-09/{sequenceId}"
+        ]
+    },
+    "events": {
+        "group": "Events",
+        "name": "Events",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211268/version/2026-09",
+        "paths": [
+            "/events/event-occurrences/2026-09",
+            "/events/event-occurrences/2026-09/event-types"
+        ]
+    },
+    "event-definitions": {
+        "group": "Events",
+        "name": "Manage Event Definitions",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211269/version/2026-09",
+        "paths": [
+            "/events/2026-09/event-definitions",
+            "/events/2026-09/event-definitions/{eventName}",
+            "/events/2026-09/event-definitions/{eventName}/property",
+            "/events/2026-09/event-definitions/{eventName}/property/{propertyName}"
+        ]
+    },
+    "send-events": {
+        "group": "Events",
+        "name": "Send Event Completions",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211270/version/2026-09",
+        "paths": [
+            "/events/2026-09/send",
+            "/events/2026-09/send/batch"
+        ]
+    },
+    "custom-channels": {
+        "group": "Conversations",
+        "name": "Custom Channels",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211266/version/2026-09",
+        "paths": [
+            "/conversations/custom-channels/2026-09",
+            "/conversations/custom-channels/2026-09/{channelId}",
+            "/conversations/custom-channels/2026-09/{channelId}/channel-account-staging-tokens/{accountToken}",
+            "/conversations/custom-channels/2026-09/{channelId}/channel-accounts",
+            "/conversations/custom-channels/2026-09/{channelId}/channel-accounts/{channelAccountId}",
+            "/conversations/custom-channels/2026-09/{channelId}/messages",
+            "/conversations/custom-channels/2026-09/{channelId}/messages/{messageId}"
+        ]
+    },
+    "visitor-id": {
+        "group": "Conversations",
+        "name": "Visitor Identification",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211267/version/2026-09",
+        "paths": [
+            "/visitor-identification/2026-09/tokens/create"
+        ]
+    },
+    "payment-links": {
+        "group": "Commerce",
+        "name": "Payment Links",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/119657/version/2026-09",
+        "paths": [
+            "/commerce/payment-links/2026-09/payment-links",
+            "/commerce/payment-links/2026-09/payment-links/{paymentLinkId}"
+        ]
+    },
+    "price-books": {
+        "group": "Commerce",
+        "name": "Price Books",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/145621/version/2026-09",
+        "paths": [
+            "/commerce/price-books/2026-09/price-books",
+            "/commerce/price-books/2026-09/price-books/{priceBookId}",
+            "/commerce/price-books/2026-09/price-books/{priceBookId}/activate",
+            "/commerce/price-books/2026-09/price-books/{priceBookId}/deactivate",
+            "/commerce/price-books/2026-09/price-books/{priceBookId}/items",
+            "/commerce/price-books/2026-09/price-books/{priceBookId}/items/batch/archive",
+            "/commerce/price-books/2026-09/price-books/{priceBookId}/items/batch/create",
+            "/commerce/price-books/2026-09/price-books/{priceBookId}/items/batch/update",
+            "/commerce/price-books/2026-09/price-books/{priceBookId}/items/{priceBookItemId}",
+            "/commerce/price-books/2026-09/price-books/{priceBookId}/validate"
+        ]
+    },
+    "crm-imports": {
+        "group": "CRM",
+        "name": "Imports",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211255/version/2026-09",
+        "paths": [
+            "/crm/imports/2026-09",
+            "/crm/imports/2026-09/{importId}",
+            "/crm/imports/2026-09/{importId}/cancel",
+            "/crm/imports/2026-09/{importId}/errors"
+        ]
+    },
+    "crm-exports": {
+        "group": "CRM",
+        "name": "Exports",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211254/version/2026-09",
+        "paths": [
+            "/crm/exports/2026-09/export/async",
+            "/crm/exports/2026-09/export/async/tasks/{taskId}/status",
+            "/crm/exports/2026-09/export/{exportId}"
+        ]
+    },
+    "crm-users": {
+        "group": "CRM",
+        "name": "Users",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/165173/version/2026-09",
+        "paths": [
+            "/crm/objects/2026-09/users",
+            "/crm/objects/2026-09/users/batch/archive",
+            "/crm/objects/2026-09/users/batch/create",
+            "/crm/objects/2026-09/users/batch/read",
+            "/crm/objects/2026-09/users/batch/update",
+            "/crm/objects/2026-09/users/batch/upsert",
+            "/crm/objects/2026-09/users/gdpr-delete",
+            "/crm/objects/2026-09/users/merge",
+            "/crm/objects/2026-09/users/search",
+            "/crm/objects/2026-09/users/{userId}",
+            "/crm/objects/2026-09/users/{userId}/associations/{toObjectType}",
+            "/crm/objects/2026-09/{fromObjectType}/{fromObjectId}/associations/default/{toObjectType}/{toObjectId}",
+            "/crm/objects/2026-09/{objectType}/{objectId}/associations/{toObjectType}/{toObjectId}"
+        ]
+    },
+    "object-tags": {
+        "group": "CRM",
+        "name": "Object Tags",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/172259/version/2026-09",
+        "paths": [
+            "/crm/object-tags/2026-09/{objectTypeId}",
+            "/crm/object-tags/2026-09/{objectTypeId}/{tagId}"
+        ]
+    },
+    "settings-teams": {
+        "group": "Settings",
+        "name": "Teams",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/183672/version/2026-09",
+        "paths": [
+            "/settings/teams/2026-09",
+            "/settings/teams/2026-09/{teamId}",
+            "/settings/teams/2026-09/{teamId}/members",
+            "/settings/teams/2026-09/{teamId}/members/batch",
+            "/settings/teams/2026-09/{teamId}/members/{userId}"
+        ]
+    },
+    "user-provisioning": {
+        "group": "Settings",
+        "name": "User Provisioning",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/179638/version/2026-09",
+        "paths": [
+            "/settings/users/2026-09",
+            "/settings/users/2026-09/roles",
+            "/settings/users/2026-09/seats",
+            "/settings/users/2026-09/teams",
+            "/settings/users/2026-09/{userId}"
+        ]
+    },
+    "webhooks": {
+        "group": "Webhooks",
+        "name": "Webhooks",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211276/version/2026-09",
+        "paths": [
+            "/app-webhooks/2026-09/{appId}/settings",
+            "/app-webhooks/2026-09/{appId}/subscriptions",
+            "/app-webhooks/2026-09/{appId}/subscriptions/batch/update",
+            "/app-webhooks/2026-09/{appId}/subscriptions/{subscriptionId}",
+            "/webhooks-journal/journal-local/2026-09/batch/earliest/{count}",
+            "/webhooks-journal/journal-local/2026-09/batch/latest/{count}",
+            "/webhooks-journal/journal-local/2026-09/batch/read",
+            "/webhooks-journal/journal-local/2026-09/batch/{offset}/next/{count}",
+            "/webhooks-journal/journal-local/2026-09/earliest",
+            "/webhooks-journal/journal-local/2026-09/latest",
+            "/webhooks-journal/journal-local/2026-09/offset/{offset}/next",
+            "/webhooks-journal/journal-local/2026-09/status/{statusId}",
+            "/webhooks-journal/journal/2026-09/batch/earliest/{count}",
+            "/webhooks-journal/journal/2026-09/batch/latest/{count}",
+            "/webhooks-journal/journal/2026-09/batch/read",
+            "/webhooks-journal/journal/2026-09/batch/{offset}/next/{count}",
+            "/webhooks-journal/journal/2026-09/earliest",
+            "/webhooks-journal/journal/2026-09/latest",
+            "/webhooks-journal/journal/2026-09/offset/{offset}/next",
+            "/webhooks-journal/journal/2026-09/status/{statusId}",
+            "/webhooks-journal/snapshots/2026-09/crm",
+            "/webhooks-journal/subscriptions/2026-09",
+            "/webhooks-journal/subscriptions/2026-09/filters",
+            "/webhooks-journal/subscriptions/2026-09/filters/subscription/{subscriptionId}",
+            "/webhooks-journal/subscriptions/2026-09/filters/{filterId}",
+            "/webhooks-journal/subscriptions/2026-09/portals/{portalId}",
+            "/webhooks-journal/subscriptions/2026-09/{subscriptionId}"
+        ]
+    },
+    "business-units": {
+        "group": "Business Units",
+        "name": "Business Units",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211236/version/2026-09",
+        "paths": [
+            "/business-units/public/2026-09/business-units/user/{userId}"
+        ]
+    },
+    "scheduler-meetings": {
+        "group": "Scheduler",
+        "name": "Meetings",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/216499/version/2026-09",
+        "paths": [
+            "/scheduler/2026-09/meetings/calendar",
+            "/scheduler/2026-09/meetings/meeting-links",
+            "/scheduler/2026-09/meetings/meeting-links/book",
+            "/scheduler/2026-09/meetings/meeting-links/book/availability-page/{slug}",
+            "/scheduler/2026-09/meetings/meeting-links/book/{slug}"
+        ]
+    }
+}

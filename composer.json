@@ -1,0 +1,49 @@
+{
+    "name": "pravnyadv/hubspot-php",
+    "description": "A lightweight, date-versioned PHP client for the HubSpot API, with auto-refreshing OAuth, retrying HTTP middleware, cursor pagination, and webhook signature verification.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["hubspot", "api", "sdk", "crm", "oauth", "php"],
+    "homepage": "https://github.com/pravnyadv/hubspot-php",
+    "authors": [
+        {
+            "name": "Praveen Yadav",
+            "homepage": "https://pravn.dev"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "guzzlehttp/guzzle": "^7.8 || ^8.0",
+        "psr/http-message": "^1.1 || ^2.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^4.0",
+        "phpstan/phpstan": "^2.0",
+        "laravel/pint": "^1.18"
+    },
+    "autoload": {
+        "psr-4": {
+            "HubSpot\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HubSpot\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "lint": "pint --test",
+        "format": "pint",
+        "analyse": "phpstan analyse",
+        "refresh-specs": "@php bin/pull-specs.php"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

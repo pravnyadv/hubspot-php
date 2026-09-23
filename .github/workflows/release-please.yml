@@ -1,0 +1,25 @@
+name: Release
+
+# Automated releases via release-please. On every push to main it opens (or
+# updates) a "release" pull request that bumps the version and updates the
+# changelog from the commit history. Merging that PR tags vX.Y.Z and creates
+# the GitHub release. Commit messages follow Conventional Commits (feat:, fix:,
+# refactor:, docs:, ...) so the version bump is derived automatically.
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
