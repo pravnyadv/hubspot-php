@@ -127,7 +127,9 @@ final class Client
 
     /**
      * Send a request and return the raw PSR-7 response. The escape hatch for
-     * non-JSON endpoints (e.g. CMS source-code file downloads).
+     * non-JSON endpoints (e.g. CMS source-code file downloads) — unlike request(),
+     * this does not default the Accept header to application/json, since some
+     * endpoints reject that (HubSpot's Source Code download 406s on it).
      *
      * @param  array<string, mixed>  $options  Guzzle request options.
      */
@@ -170,6 +172,7 @@ final class Client
      */
     public function requestAsync(string $method, string $path, array $options = [], ?ResponseFormat $format = null): PromiseInterface
     {
+        $options['headers']['Accept'] ??= 'application/json';
         $format ??= $this->responseFormat;
 
         return $this->sendAsync($method, $path, $options)
@@ -218,6 +221,8 @@ final class Client
      */
     public function request(string $method, string $path, array $options = [], ?ResponseFormat $format = null): array|object
     {
+        $options['headers']['Accept'] ??= 'application/json';
+
         return $this->decode($this->send($method, $path, $options), $format ?? $this->responseFormat);
     }
 
@@ -301,7 +306,9 @@ final class Client
     }
 
     /**
-     * Attach auth and normalise options for both sync and async paths.
+     * Attach auth and normalise options for both sync and async paths. Does not
+     * default Accept — request()/requestAsync() do that themselves, since send()/
+     * sendAsync() are the non-JSON escape hatch (see send()'s docblock).
      *
      * @param  array<string, mixed>  $options
      * @return array<string, mixed>
@@ -309,7 +316,6 @@ final class Client
     private function prepareOptions(array $options): array
     {
         $options['headers']['Authorization'] = 'Bearer '.$this->auth->accessToken();
-        $options['headers']['Accept'] ??= 'application/json';
 
         // HubSpot expects boolean query params as true/false, not PHP's default 1/0.
         if (isset($options['query']) && is_array($options['query'])) {
