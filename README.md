@@ -27,9 +27,10 @@ $contact = $client->crm()->contacts()->get('123', ['email']);
 echo $contact->properties->email;
 ```
 
-Resources are grouped by product area:
+Resources are grouped by product area (`/` means "or" between method names, not
+division — this isn't valid PHP, just a compact reference):
 
-```php
+```text
 $client->crm()->objects('contacts')   // generic, any object type incl. custom p_*
 $client->crm()->contacts() / deals() / tickets() / lists() / owners() / properties()
       ->associations() / pipelines() / schemas() / timeline() / imports() / exports() / users()
