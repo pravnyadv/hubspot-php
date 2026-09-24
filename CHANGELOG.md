@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2](https://github.com/pravnyadv/hubspot-php/compare/v0.2.1...v0.2.2) (2026-09-24)
+
+
+### Features
+
+* add logging support to OAuthClient ([083d54d](https://github.com/pravnyadv/hubspot-php/commit/083d54d1ab48be7a7f7f082d46bd1ee876f9eef0))
+* add logging support to OAuthClient ([5e17e39](https://github.com/pravnyadv/hubspot-php/commit/5e17e393ef7937363dbeda3fbcf471fabade1001))
+
 ## [0.2.1](https://github.com/pravnyadv/hubspot-php/compare/v0.2.0...v0.2.1) (2026-09-23)
 
 
