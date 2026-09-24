@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.3](https://github.com/pravnyadv/hubspot-php/compare/v0.2.2...v0.2.3) (2026-09-24)
+
+
+### Reverts
+
+* keep the resource overview fenced as PHP ([75ff653](https://github.com/pravnyadv/hubspot-php/commit/75ff653dabc704694f99fc72b42a82ad562653e4))
+* keep the resource overview fenced as PHP ([76094bb](https://github.com/pravnyadv/hubspot-php/commit/76094bba8944fc90ad3b295a3a58cfe027299650))
+
 ## [0.2.2](https://github.com/pravnyadv/hubspot-php/compare/v0.2.1...v0.2.2) (2026-09-24)
 
 
