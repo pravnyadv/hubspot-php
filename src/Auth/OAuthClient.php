@@ -8,8 +8,11 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\TransferStats;
 use HubSpot\Exceptions\AuthenticationException;
 use HubSpot\Middleware\RetryMiddleware;
+use HubSpot\Support\TransferLogger;
+use Psr\Log\LoggerInterface;
 
 /**
  * The OAuth token endpoint itself, exchanging a code or refresh token for
@@ -20,9 +23,16 @@ final class OAuthClient
 {
     private readonly ClientInterface $http;
 
+    /**
+     * @param  array<string, mixed>  $context  added to every log line (e.g. an app
+     *                                         identifier) — there's no portal id yet,
+     *                                         the token exchange is what gets one.
+     */
     public function __construct(
         ?ClientInterface $http = null,
         private readonly string $version = '2026-03',
+        private readonly array $context = [],
+        private readonly ?LoggerInterface $logger = null,
     ) {
         // Retry transient failures (429/5xx) on token calls too: a failed refresh
         // cascades into every subsequent API request. http_errors stays on so a
@@ -85,9 +95,9 @@ final class OAuthClient
     public function tokenInfo(string $accessToken): array
     {
         try {
-            $response = $this->http->request('GET', "oauth/v1/access-tokens/{$accessToken}", [
+            $response = $this->http->request('GET', "oauth/v1/access-tokens/{$accessToken}", $this->withLogging([
                 'headers' => ['Accept' => 'application/json'],
-            ]);
+            ]));
         } catch (GuzzleException $e) {
             throw AuthenticationException::fromGuzzleException($e);
         }
@@ -101,10 +111,10 @@ final class OAuthClient
     private function requestToken(array $form, ?string $fallbackRefreshToken = null): TokenSet
     {
         try {
-            $response = $this->http->request('POST', "oauth/{$this->version}/token", [
+            $response = $this->http->request('POST', "oauth/{$this->version}/token", $this->withLogging([
                 'form_params' => $form,
                 'headers' => ['Accept' => 'application/json'],
-            ]);
+            ]));
         } catch (GuzzleException $e) {
             throw AuthenticationException::fromGuzzleException($e);
         }
@@ -120,5 +130,20 @@ final class OAuthClient
         }
 
         return TokenSet::fromTokenResponse($data, $fallbackRefreshToken);
+    }
+
+    /**
+     * @param  array<string, mixed>  $options
+     * @return array<string, mixed>
+     */
+    private function withLogging(array $options): array
+    {
+        if ($this->logger !== null) {
+            $options['on_stats'] = function (TransferStats $stats): void {
+                TransferLogger::log($this->logger, $this->context, $stats);
+            };
+        }
+
+        return $options;
     }
 }

@@ -27,10 +27,10 @@ use HubSpot\Middleware\RetryMiddleware;
 use HubSpot\Resources\AccountInfo;
 use HubSpot\Resources\Files;
 use HubSpot\Resources\Scheduler;
+use HubSpot\Support\TransferLogger;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
 use Throwable;
 
 /**
@@ -329,7 +329,7 @@ final class Client
         if ($this->logger !== null) {
             $callerStats = $options['on_stats'] ?? null;
             $options['on_stats'] = function (TransferStats $stats) use ($callerStats): void {
-                $this->logTransfer($stats);
+                TransferLogger::log($this->logger, $this->context, $stats);
                 if (is_callable($callerStats)) {
                     $callerStats($stats);
                 }
@@ -337,44 +337,6 @@ final class Client
         }
 
         return $options;
-    }
-
-    private function logTransfer(TransferStats $stats): void
-    {
-        $request = $stats->getRequest();
-        $response = $stats->getResponse();
-        $status = $response?->getStatusCode();
-        $path = $request->getUri()->getPath();
-        $error = $stats->getHandlerErrorData();
-
-        $context = $this->requestContext($request->getMethod(), $path, $response) + array_filter([
-            'status' => $status,
-            'duration_ms' => $stats->getTransferTime() !== null ? (int) round($stats->getTransferTime() * 1000) : null,
-            'error' => $error instanceof Throwable ? $error->getMessage() : null,
-        ], static fn (mixed $value): bool => $value !== null);
-
-        $level = match (true) {
-            $status === null, $status === 429, $status >= 500 => LogLevel::WARNING,
-            $status >= 400 => LogLevel::INFO,
-            default => LogLevel::DEBUG,
-        };
-
-        $this->logger?->log($level, sprintf('HubSpot %s %s %s', $request->getMethod(), $path, $status ?? 'no response'), $context);
-    }
-
-    /**
-     * The client's context plus what identifies this request. Query strings are
-     * left out: they can carry emails and other personal data.
-     *
-     * @return array<string, mixed>
-     */
-    private function requestContext(string $method, string $path, ?ResponseInterface $response = null): array
-    {
-        return $this->context + array_filter([
-            'method' => $method,
-            'path' => '/'.ltrim(strtok($path, '?') ?: '', '/'),
-            'correlation_id' => $response?->getHeaderLine('X-HubSpot-Correlation-Id') ?: null,
-        ], static fn (mixed $value): bool => $value !== null);
     }
 
     private function ensureSuccessful(ResponseInterface $response, string $method, string $path): ResponseInterface
@@ -391,7 +353,7 @@ final class Client
         return ApiException::fromResponse(
             $response->getStatusCode(),
             (string) $response->getBody(),
-            $this->requestContext($method, $path, $response),
+            TransferLogger::requestContext($this->context, $method, $path, $response),
             $response->hasHeader('Retry-After') ? (int) $response->getHeaderLine('Retry-After') : null,
         );
     }
@@ -408,7 +370,7 @@ final class Client
         }
 
         if ($e instanceof GuzzleException) {
-            return new ConnectionException(0, null, 'HubSpot request failed: '.$e->getMessage(), $this->requestContext($method, $path), $e);
+            return new ConnectionException(0, null, 'HubSpot request failed: '.$e->getMessage(), TransferLogger::requestContext($this->context, $method, $path), $e);
         }
 
         return $e;

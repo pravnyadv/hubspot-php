@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\TransferStats;
+use HubSpot\Auth\OAuthClient;
 
 it('logs each request at debug with the client context and timing', function () {
     $logger = new MemoryLogger;
@@ -75,3 +79,34 @@ function rescue(callable $call): void
     } catch (Throwable) {
     }
 }
+
+/**
+ * OAuthClient has no AuthProvider yet at the point it's used (it's what gets you
+ * one) — the token exchange itself was previously silent no matter what logger
+ * Client had, since OAuthClient didn't accept one at all.
+ */
+it('logs a token exchange the same way Client logs a data-plane call', function () {
+    $logger = new MemoryLogger;
+    $mock = new MockHandler([jsonResponse(200, ['access_token' => 'a1', 'refresh_token' => 'r1', 'expires_in' => 1800])]);
+    $http = new GuzzleClient(['handler' => HandlerStack::create($mock), 'base_uri' => 'https://api.hubapi.com']);
+    $client = new OAuthClient($http, context: ['app' => 'formshield'], logger: $logger);
+
+    $client->exchangeAuthorizationCode('cid', 'secret', 'the-code', 'https://app/callback');
+
+    expect($logger->records)->toHaveCount(1);
+    $record = $logger->records[0];
+    expect($record['level'])->toBe('debug');
+    expect($record['message'])->toBe('HubSpot POST /oauth/2026-03/token 200');
+    expect($record['context'])->toMatchArray(['app' => 'formshield', 'method' => 'POST', 'status' => 200]);
+});
+
+it('logs a failed refresh at warning, same as any other 4xx/5xx', function () {
+    $logger = new MemoryLogger;
+    $mock = new MockHandler([jsonResponse(500, 'boom')]);
+    $http = new GuzzleClient(['handler' => HandlerStack::create($mock), 'base_uri' => 'https://api.hubapi.com']);
+    $client = new OAuthClient($http, logger: $logger);
+
+    rescue(fn () => $client->refresh('cid', 'secret', 'old-refresh'));
+
+    expect($logger->records[0]['level'])->toBe('warning');
+});
