@@ -20,7 +20,7 @@ function oauthClient(array $responses): array
     return [new OAuthClient($http), $mock];
 }
 
-it('exchanges an authorization code for a TokenSet at the 2026-03 token endpoint', function () {
+it('exchanges an authorization code for a TokenSet at the 2026-09 token endpoint', function () {
     [$client, $mock] = oauthClient([
         new Response(200, [], (string) json_encode(['access_token' => 'a1', 'refresh_token' => 'r1', 'expires_in' => 1800])),
     ]);
@@ -29,7 +29,7 @@ it('exchanges an authorization code for a TokenSet at the 2026-03 token endpoint
 
     $request = $mock->getLastRequest();
     expect($request->getMethod())->toBe('POST');
-    expect($request->getUri()->getPath())->toBe('/oauth/2026-03/token');
+    expect($request->getUri()->getPath())->toBe('/oauth/2026-09/token');
     expect((string) $request->getBody())->toContain('grant_type=authorization_code');
     expect($tokens)->toBeInstanceOf(TokenSet::class);
     expect($tokens->accessToken)->toBe('a1');
@@ -76,9 +76,13 @@ it('reads token metadata from the introspection endpoint', function () {
         new Response(200, [], (string) json_encode(['hub_id' => 123, 'scopes' => ['crm.objects.contacts.read']])),
     ]);
 
-    $info = $client->tokenInfo('access-token-xyz');
+    $info = $client->tokenInfo('cid', 'secret', 'access-token-xyz');
 
-    expect($mock->getLastRequest()->getUri()->getPath())->toBe('/oauth/v1/access-tokens/access-token-xyz');
+    $request = $mock->getLastRequest();
+    expect($request->getMethod())->toBe('POST');
+    expect($request->getUri()->getPath())->toBe('/oauth/2026-09/token/introspect');
+    parse_str((string) $request->getBody(), $form);
+    expect($form)->toBe(['client_id' => 'cid', 'client_secret' => 'secret', 'token' => 'access-token-xyz']);
     expect($info)->toBe(['hub_id' => 123, 'scopes' => ['crm.objects.contacts.read']]);
 });
 

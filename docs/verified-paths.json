@@ -873,5 +873,17 @@
             "/scheduler/2026-09/meetings/meeting-links/book/availability-page/{slug}",
             "/scheduler/2026-09/meetings/meeting-links/book/{slug}"
         ]
+    },
+    "oauth": {
+        "group": "Auth",
+        "name": "Oauth",
+        "version": "2026-09",
+        "stage": "LIVE",
+        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211233/version/2026-09",
+        "paths": [
+            "/oauth/2026-09/token",
+            "/oauth/2026-09/token/introspect",
+            "/oauth/2026-09/token/revoke"
+        ]
     }
 }

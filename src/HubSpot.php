@@ -47,7 +47,7 @@ final class HubSpot
 
     public static function oauth(
         ?ClientInterface $http = null,
-        string $version = '2026-03',
+        string $version = OAuthClient::DEFAULT_VERSION,
     ): OAuthClient {
         return new OAuthClient($http, $version);
     }

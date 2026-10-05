@@ -21,6 +21,8 @@ use Psr\Log\LoggerInterface;
  */
 final class OAuthClient
 {
+    public const DEFAULT_VERSION = '2026-09';
+
     private readonly ClientInterface $http;
 
     /**
@@ -30,7 +32,7 @@ final class OAuthClient
      */
     public function __construct(
         ?ClientInterface $http = null,
-        private readonly string $version = '2026-03',
+        private readonly string $version = self::DEFAULT_VERSION,
         private readonly array $context = [],
         private readonly ?LoggerInterface $logger = null,
     ) {
@@ -87,15 +89,20 @@ final class OAuthClient
     }
 
     /**
-     * Token metadata (hub id, user, scopes, expiry) for an access token. Still a
-     * numbered path: HubSpot has not shipped a date-based introspection endpoint.
+     * Token metadata (active, hub id, user, scopes, expiry) for an access or
+     * refresh token.
      *
      * @return array<string, mixed>
      */
-    public function tokenInfo(string $accessToken): array
+    public function tokenInfo(string $clientId, string $clientSecret, string $token): array
     {
         try {
-            $response = $this->http->request('GET', "oauth/v1/access-tokens/{$accessToken}", $this->withLogging([
+            $response = $this->http->request('POST', "oauth/{$this->version}/token/introspect", $this->withLogging([
+                'form_params' => [
+                    'client_id' => $clientId,
+                    'client_secret' => $clientSecret,
+                    'token' => $token,
+                ],
                 'headers' => ['Accept' => 'application/json'],
             ]));
         } catch (GuzzleException $e) {

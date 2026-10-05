@@ -96,7 +96,7 @@ it('logs a token exchange the same way Client logs a data-plane call', function 
     expect($logger->records)->toHaveCount(1);
     $record = $logger->records[0];
     expect($record['level'])->toBe('debug');
-    expect($record['message'])->toBe('HubSpot POST /oauth/2026-03/token 200');
+    expect($record['message'])->toBe('HubSpot POST /oauth/2026-09/token 200');
     expect($record['context'])->toMatchArray(['app' => 'formshield', 'method' => 'POST', 'status' => 200]);
 });
 
