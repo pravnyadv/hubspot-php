@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/pravnyadv/hubspot-php/compare/v0.2.3...v0.3.0) (2026-10-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* **oauth:** tokenInfo() now takes the app credentials: tokenInfo($clientId, $clientSecret, $token).
+
+### Features
+
+* **oauth:** default token endpoint to 2026-09 ([d6862b9](https://github.com/pravnyadv/hubspot-php/commit/d6862b9c267940ee2bec0fd9f16e11b923fde288))
+* **oauth:** read token metadata from the introspect endpoint ([0cc710e](https://github.com/pravnyadv/hubspot-php/commit/0cc710ed30c4074d75b569bc72dd1af1560eb396))
+
 ## [0.2.3](https://github.com/pravnyadv/hubspot-php/compare/v0.2.2...v0.2.3) (2026-09-24)
 
 
