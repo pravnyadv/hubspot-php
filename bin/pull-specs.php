@@ -22,7 +22,7 @@ const OUT_MD = __DIR__.'/../docs/verified-paths.md';
 /**
  * The APIs this package covers, keyed by our short name. `version` is a regex
  * anchoring which release we pull. The version segment is product-specific
- * (CRM is 2026-09, Forms is 2026-09-beta, OAuth is 2026-03), it is NOT a global
+ * (CRM is 2026-09, Forms is 2026-09-beta), it is NOT a global
  * date prefix, so each entry pins its own.
  */
 const WANTED = [

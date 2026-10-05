@@ -21,6 +21,8 @@ use Psr\Log\LoggerInterface;
  */
 final class OAuthClient
 {
+    public const DEFAULT_VERSION = '2026-09';
+
     private readonly ClientInterface $http;
 
     /**
@@ -30,7 +32,7 @@ final class OAuthClient
      */
     public function __construct(
         ?ClientInterface $http = null,
-        private readonly string $version = '2026-03',
+        private readonly string $version = self::DEFAULT_VERSION,
         private readonly array $context = [],
         private readonly ?LoggerInterface $logger = null,
     ) {
