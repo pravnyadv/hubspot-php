@@ -73,6 +73,7 @@ const WANTED = [
     'webhooks' => ['group' => 'Webhooks', 'name' => 'Webhooks', 'version' => '/^2026-09$/'],
     'business-units' => ['group' => 'Business Units', 'name' => 'Business Units', 'version' => '/^2026-09$/'],
     'scheduler-meetings' => ['group' => 'Scheduler', 'name' => 'Meetings', 'version' => '/^2026-09$/'],
+    'oauth' => ['group' => 'Auth', 'name' => 'Oauth', 'version' => '/^2026-09$/'],
 ];
 
 function http_get(string $url): string
@@ -108,8 +109,27 @@ function cached_json(string $key, string $url): array
     return json_decode($body, true, flags: JSON_THROW_ON_ERROR);
 }
 
+/**
+ * Date-based releases newer than $pinned on the same channel: a stable pin
+ * ignores betas and a "-beta" pin ignores stable.
+ *
+ * @param  list<array{releaseVersion: string, stage: string}>  $releases
+ * @return list<array{releaseVersion: string, stage: string}>
+ */
+function newer_releases(array $releases, string $pinned): array
+{
+    $isBeta = str_ends_with($pinned, '-beta');
+
+    return array_values(array_filter($releases, fn (array $r): bool => preg_match('/^\d{4}-\d{2}/', $r['releaseVersion']) === 1
+        && str_ends_with($r['releaseVersion'], '-beta') === $isBeta
+        && strcmp($r['releaseVersion'], $pinned) > 0));
+}
+
 echo "Fetching catalog...\n";
-$catalog = cached_json('_catalog', CATALOG);
+// Always fresh: a cached catalog would hide the newer releases flagged below.
+$catalog = json_decode(http_get(CATALOG), true, flags: JSON_THROW_ON_ERROR);
+
+$outdated = 0;
 
 $result = [];
 foreach (WANTED as $key => $want) {
@@ -140,7 +160,11 @@ foreach (WANTED as $key => $want) {
     }
 
     echo "  {$key}: {$want['name']} @ {$release['releaseVersion']} [{$release['stage']}]\n";
-    $spec = cached_json($key, $release['openApi']);
+    foreach (newer_releases($entry['releases'], $release['releaseVersion']) as $r) {
+        fwrite(STDERR, "  ! {$key}: newer release {$r['releaseVersion']} [{$r['stage']}]\n");
+        $outdated++;
+    }
+    $spec = cached_json("{$key}@{$release['releaseVersion']}", $release['openApi']);
     $paths = array_keys($spec['paths'] ?? []);
     sort($paths);
 
@@ -175,3 +199,8 @@ foreach ($result as $key => $r) {
 file_put_contents(OUT_MD, $md);
 
 echo 'Wrote '.OUT_JSON.' and '.OUT_MD."\n";
+
+if ($outdated > 0) {
+    fwrite(STDERR, "{$outdated} newer release(s) available; bump the pins above.\n");
+    exit(2);
+}
