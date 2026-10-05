@@ -5,8 +5,8 @@ name: Release
 # changelog from the commit history, then this workflow merges that PR
 # immediately (no branch protection on main requiring checks first — the code
 # itself was already tested on its own PR before landing on main; the release
-# PR only touches the version + changelog). That merge is what tags vX.Y.Z and
-# creates the GitHub release. Commit messages follow Conventional Commits
+# PR only touches the version + changelog). A second release-please run then
+# tags vX.Y.Z and creates the GitHub release. Commit messages follow Conventional Commits
 # (feat:, fix:, refactor:, docs:, ...) so the version bump is derived
 # automatically.
 
@@ -34,3 +34,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh pr merge --merge --repo ${{ github.repository }} ${{ fromJSON(steps.release.outputs.pr).number }}
+
+      # The merge above is pushed with github.token, which never triggers a new
+      # workflow run, so tag and release the merged PR here instead.
+      - name: Tag and release the merged PR
+        if: ${{ steps.release.outputs.prs_created == 'true' }}
+        uses: googleapis/release-please-action@v4
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
