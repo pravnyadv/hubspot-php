@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1](https://github.com/pravnyadv/hubspot-php/compare/v0.3.0...v0.3.1) (2026-10-05)
+
+
+### Bug Fixes
+
+* **ci:** tag the release in the same run that merges the release PR ([70c7250](https://github.com/pravnyadv/hubspot-php/commit/70c72508c4a37c7da3127d05f3e0180fdbe1ce8c))
+* **ci:** tag the release in the same run that merges the release PR ([8268fc6](https://github.com/pravnyadv/hubspot-php/commit/8268fc691402c8228e8909f682cec0cef07cc142))
+
 ## [0.3.0](https://github.com/pravnyadv/hubspot-php/compare/v0.2.3...v0.3.0) (2026-10-05)
 
 
