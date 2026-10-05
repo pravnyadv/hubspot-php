@@ -76,9 +76,13 @@ it('reads token metadata from the introspection endpoint', function () {
         new Response(200, [], (string) json_encode(['hub_id' => 123, 'scopes' => ['crm.objects.contacts.read']])),
     ]);
 
-    $info = $client->tokenInfo('access-token-xyz');
+    $info = $client->tokenInfo('cid', 'secret', 'access-token-xyz');
 
-    expect($mock->getLastRequest()->getUri()->getPath())->toBe('/oauth/v1/access-tokens/access-token-xyz');
+    $request = $mock->getLastRequest();
+    expect($request->getMethod())->toBe('POST');
+    expect($request->getUri()->getPath())->toBe('/oauth/2026-09/token/introspect');
+    parse_str((string) $request->getBody(), $form);
+    expect($form)->toBe(['client_id' => 'cid', 'client_secret' => 'secret', 'token' => 'access-token-xyz']);
     expect($info)->toBe(['hub_id' => 123, 'scopes' => ['crm.objects.contacts.read']]);
 });
 
