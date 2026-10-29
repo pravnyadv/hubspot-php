@@ -1,13 +1,15 @@
-# hubspot-php
+# HubSpot PHP SDK for Dated APIs
 
 [![Tests](https://github.com/pravnyadv/hubspot-php/actions/workflows/tests.yml/badge.svg)](https://github.com/pravnyadv/hubspot-php/actions/workflows/tests.yml)
 [![Latest Version](https://img.shields.io/packagist/v/pravnyadv/hubspot-php.svg)](https://packagist.org/packages/pravnyadv/hubspot-php)
 [![PHP Version](https://img.shields.io/packagist/php-v/pravnyadv/hubspot-php.svg)](https://packagist.org/packages/pravnyadv/hubspot-php)
 [![License](https://img.shields.io/github/license/pravnyadv/hubspot-php.svg)](LICENSE)
 
-A small, framework-free PHP client for HubSpot's date-based API versions (`2026-09` and later). The official SDK still calls the numbered versions HubSpot is retiring in 2027; this maps every resource to its correct dated path, read from HubSpot's own OpenAPI catalog.
+A framework-free PHP SDK for the HubSpot CRM and dated API versions, including `2026-09` and later. Install it with Composer as [`pravnyadv/hubspot-php`](https://packagist.org/packages/pravnyadv/hubspot-php).
 
-Plain `stdClass`/array responses (no model classes), a grouped facade, per-family version pinning, auto-refreshing OAuth, idempotency-aware retries, cursor pagination, typed exceptions parsed from HubSpot's error schema, PSR-3 logging with your own context, webhook verification, and async with a concurrency pool.
+We built this framework-free HubSpot PHP SDK for teams adopting HubSpot's date-versioned APIs. CRM, account, and CMS resources default to `2026-09`, with per-family version pinning. It also includes OAuth refresh, retries, cursor pagination, typed exceptions, webhook verification, async requests, and plain object or array responses. Endpoint paths are mapped from HubSpot's OpenAPI catalog.
+
+Responses are plain `stdClass` objects by default, with associative arrays available when preferred. The client is framework-free and supports PHP 8.3+, Guzzle 7 or 8, and per-family API version pinning.
 
 ## Install
 

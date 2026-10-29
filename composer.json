@@ -1,9 +1,9 @@
 {
     "name": "pravnyadv/hubspot-php",
-    "description": "A lightweight, date-versioned PHP client for the HubSpot API, with auto-refreshing OAuth, retrying HTTP middleware, cursor pagination, and webhook signature verification.",
+    "description": "A framework-free PHP SDK for the HubSpot CRM and dated APIs, with OAuth refresh, retries, pagination, and webhook signature verification.",
     "type": "library",
     "license": "MIT",
-    "keywords": ["hubspot", "api", "sdk", "crm", "oauth", "php"],
+    "keywords": ["hubspot", "hubspot-api", "hubspot-php", "hubspot-sdk", "hubspot-crm", "api", "api-client", "sdk", "php-client", "php", "crm", "oauth", "webhooks", "pagination"],
     "homepage": "https://github.com/pravnyadv/hubspot-php",
     "authors": [
         {
