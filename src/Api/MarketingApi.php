@@ -16,7 +16,7 @@ use HubSpot\Resources\Transactional;
 /**
  * Marketing resource group: $client->marketing()->forms(), ->emails(),
  * ->events(), ->campaigns(), etc. Forms defaults to its own independent version
- * (2026-09-beta); an explicit override still wins.
+ * (2027-03-beta); an explicit override still wins.
  */
 final class MarketingApi
 {

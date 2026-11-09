@@ -8,12 +8,12 @@ use HubSpot\Client;
 use HubSpot\Pagination\Paginator;
 
 /**
- * Marketing Forms API. Versions independently as 2026-09-beta; a caller may
+ * Marketing Forms API. Versions independently as 2027-03-beta; a caller may
  * pass an explicit override (e.g. an older pin) to the factory, and that wins.
  */
 final class Forms extends Resource
 {
-    public const VERSION = '2026-09-beta';
+    public const VERSION = '2027-03-beta';
 
     public function __construct(Client $client, ?string $version = null)
     {
