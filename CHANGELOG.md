@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.2](https://github.com/pravnyadv/hubspot-php/compare/v0.3.1...v0.3.2) (2026-11-09)
+
+
+### Bug Fixes
+
+* move Forms and Flows to HubSpot 2027-03-beta ([893d341](https://github.com/pravnyadv/hubspot-php/commit/893d341dc71c7ed77654fbd3a37e157eed01faf1))
+* move Forms and Flows to HubSpot 2027-03-beta ([0feaf52](https://github.com/pravnyadv/hubspot-php/commit/0feaf52c11827424ebeed3efc78332908a972a32))
+
 ## [0.3.1](https://github.com/pravnyadv/hubspot-php/compare/v0.3.0...v0.3.1) (2026-10-05)
 
 
