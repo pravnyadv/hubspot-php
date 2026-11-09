@@ -9,7 +9,8 @@ use HubSpot\Client;
 /**
  * Workflows (Flows) API, reached via $client->automation()->flows(). Versions
  * independently as 2027-03-beta, so it does not follow the client-wide default.
- * The v4 path prefix also applies to explicit version overrides.
+ * HubSpot moved flows under /automation/v4 from 2027-03 on; older overrides
+ * keep their original path.
  */
 final class Flows extends Resource
 {
@@ -20,13 +21,20 @@ final class Flows extends Resource
         parent::__construct($client, $version ?? self::VERSION);
     }
 
+    private function base(): string
+    {
+        $prefix = strcmp($this->version(), '2027-03') >= 0 ? '/automation/v4' : '/automation';
+
+        return "{$prefix}/{$this->version()}";
+    }
+
     /**
      * @param  array<string, mixed>  $query
      * @return array<mixed>|object
      */
     public function list(array $query = []): array|object
     {
-        return $this->client->request('GET', "/automation/v4/{$this->version()}/flows", [
+        return $this->client->request('GET', "{$this->base()}/flows", [
             'query' => $this->filterNull($query),
         ]);
     }
@@ -34,7 +42,7 @@ final class Flows extends Resource
     /** @return array<mixed>|object */
     public function get(string $flowId): array|object
     {
-        return $this->client->request('GET', "/automation/v4/{$this->version()}/flows/{$flowId}");
+        return $this->client->request('GET', "{$this->base()}/flows/{$flowId}");
     }
 
     /**
@@ -43,12 +51,12 @@ final class Flows extends Resource
      */
     public function batchRead(array $inputs): array|object
     {
-        return $this->batch("/automation/v4/{$this->version()}/flows/batch/read", $inputs);
+        return $this->batch("{$this->base()}/flows/batch/read", $inputs);
     }
 
     /** @return array<mixed>|object */
     public function actionTypes(): array|object
     {
-        return $this->client->request('GET', "/automation/v4/{$this->version()}/action-types");
+        return $this->client->request('GET', "{$this->base()}/action-types");
     }
 }

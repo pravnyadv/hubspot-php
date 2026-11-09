@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HubSpot\Resources\Flows;
+use HubSpot\Resources\Forms;
+
 it('flows() sends GET /automation/v4/2027-03-beta/flows by default', function () {
     [$client, $mock] = mockClient([
         jsonResponse(200, ['results' => [['id' => 'flow-1']]]),
@@ -69,12 +72,19 @@ it('actionTypes() sends GET /automation/v4/2027-03-beta/action-types', function 
     expect($result)->toBe(['results' => [['name' => 'send-email']]]);
 });
 
-it('version override changes the date segment in the path', function () {
+it('version override before 2027-03 keeps the pre-v4 path', function () {
     [$client, $mock] = mockClient([
         jsonResponse(200, ['results' => []]),
     ]);
 
-    $client->automation()->flows('2026-03')->list();
+    $client->automation()->flows('2026-09-beta')->list();
 
-    expect($mock->getLastRequest()->getUri()->getPath())->toBe('/automation/v4/2026-03/flows');
+    expect($mock->getLastRequest()->getUri()->getPath())->toBe('/automation/2026-09-beta/flows');
+});
+
+it('default versions match the pins in docs/verified-paths.json', function () {
+    $verified = json_decode((string) file_get_contents(__DIR__.'/../docs/verified-paths.json'), true);
+
+    expect(Flows::VERSION)->toBe($verified['automation']['version']);
+    expect(Forms::VERSION)->toBe($verified['forms']['version']);
 });
