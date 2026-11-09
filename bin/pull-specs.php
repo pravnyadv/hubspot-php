@@ -9,11 +9,13 @@ declare(strict_types=1);
  *
  * Run: php bin/pull-specs.php
  *
- * Why this exists: HubSpot's doc *pages* hallucinate (fake URLs, wrong dates),
- * but the spec catalog is machine-readable and authoritative, and needs no auth.
+ * Why this exists: the machine catalog can lag behind releases.
+ * The public GitHub spec collection is the source for versions and paths.
  * Read the distilled docs/verified-paths.md, never the multi-thousand-line raw
  * specs, when you need a path.
  */
+const COLLECTION = 'https://api.github.com/repos/HubSpot/HubSpot-public-api-spec-collection/git/trees/main?recursive=1';
+const RAW = 'https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/';
 const CATALOG = 'https://api.hubapi.com/public/api/spec/v2/specs';
 const CACHE_DIR = __DIR__.'/../.spec-cache';
 const OUT_JSON = __DIR__.'/../docs/verified-paths.json';
@@ -22,7 +24,7 @@ const OUT_MD = __DIR__.'/../docs/verified-paths.md';
 /**
  * The APIs this package covers, keyed by our short name. `version` is a regex
  * anchoring which release we pull. The version segment is product-specific
- * (CRM is 2026-09, Forms is 2026-09-beta), it is NOT a global
+ * (CRM is 2026-09, Forms is 2027-03-beta), it is NOT a global
  * date prefix, so each entry pins its own.
  */
 const WANTED = [
@@ -31,7 +33,7 @@ const WANTED = [
     'crm-owners' => ['group' => 'CRM',       'name' => 'Crm Owners',     'version' => '/^2026-09$/'],
     'crm-props' => ['group' => 'CRM',       'name' => 'Properties',     'version' => '/^2026-09$/'],
     'account-info' => ['group' => 'Account',   'name' => 'Account Info',   'version' => '/^2026-09$/'],
-    'forms' => ['group' => 'Marketing', 'name' => 'Forms',          'version' => '/^2026-09-beta$/'],
+    'forms' => ['group' => 'Marketing', 'name' => 'Forms',          'version' => '/^2027-03-beta$/'],
     'cms-pages' => ['group' => 'CMS',       'name' => 'Pages',          'version' => '/^2026-09$/'],
     'cms-source' => ['group' => 'CMS',       'name' => 'Source Code',    'version' => '/^2026-09$/'],
     'associations' => ['group' => 'CRM',       'name' => 'Associations',   'version' => '/^2026-09$/'],
@@ -41,7 +43,7 @@ const WANTED = [
     'files' => ['group' => 'Files',     'name' => 'Files',          'version' => '/^2026-09$/'],
     'comm-prefs' => ['group' => 'Communication Preferences', 'name' => 'Subscriptions', 'version' => '/^2026-09$/'],
     'conversations' => ['group' => 'Conversations', 'name' => 'Conversations', 'version' => '/^2026-09$/'],
-    'automation' => ['group' => 'Automation', 'name' => 'Automation V4', 'version' => '/^2026-09-beta$/'],
+    'automation' => ['group' => 'Automation', 'name' => 'Automation V4', 'version' => '/^2027-03-beta$/'],
     // Expansion: distinct non-object public families.
     'blog-posts' => ['group' => 'CMS', 'name' => 'Posts', 'version' => '/^2026-09$/'],
     'blog-authors' => ['group' => 'CMS', 'name' => 'Authors', 'version' => '/^2026-09$/'],
@@ -83,7 +85,7 @@ function http_get(string $url): string
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_TIMEOUT => 40,
         CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER => ['Accept: application/json'],
+        CURLOPT_HTTPHEADER => ['Accept: application/json', 'User-Agent: hubspot-php-sdk'],
     ]);
     $body = curl_exec($ch);
     $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -125,29 +127,49 @@ function newer_releases(array $releases, string $pinned): array
         && strcmp($r['releaseVersion'], $pinned) > 0));
 }
 
-echo "Fetching catalog...\n";
-// Always fresh: a cached catalog would hide the newer releases flagged below.
+echo "Fetching collection and catalog...\n";
+// Always fresh: cached release lists would hide newer releases.
+$collection = json_decode(http_get(COLLECTION), true, flags: JSON_THROW_ON_ERROR);
+if ($collection['truncated'] ?? true) {
+    fwrite(STDERR, "Collection tree is truncated or invalid.\n");
+    exit(1);
+}
 $catalog = json_decode(http_get(CATALOG), true, flags: JSON_THROW_ON_ERROR);
 
 $outdated = 0;
 
 $result = [];
 foreach (WANTED as $key => $want) {
-    $entry = null;
+    $stages = [];
     foreach ($catalog['results'] as $api) {
         if ($api['group'] === $want['group'] && $api['name'] === $want['name']) {
-            $entry = $api;
+            foreach ($api['releases'] as $r) {
+                $stages[$r['releaseVersion']] = $r['stage'];
+            }
             break;
         }
     }
-    if ($entry === null) {
-        fwrite(STDERR, "  ! not found in catalog: {$want['group']}/{$want['name']}\n");
 
-        continue;
+    $releases = [];
+    $prefix = 'PublicApiSpecs/'.$want['group'].'/'.$want['name'].'/Rollouts/';
+    foreach ($collection['tree'] as $item) {
+        $path = $item['path'];
+        if (! str_starts_with($path, $prefix) || ! preg_match('~^(\d+)/(\d{4}-\d{2}[^/]*)/[^/]+\.json$~', substr($path, strlen($prefix)), $match)) {
+            continue;
+        }
+        [, $rollout, $version] = $match;
+        if (! isset($releases[$version]) || (int) $rollout > (int) $releases[$version]['rollout']) {
+            $releases[$version] = [
+                'releaseVersion' => $version,
+                'stage' => $stages[$version] ?? 'UNLISTED',
+                'rollout' => $rollout,
+                'openApi' => RAW.implode('/', array_map('rawurlencode', explode('/', $path))),
+            ];
+        }
     }
-
+    krsort($releases);
     $release = null;
-    foreach ($entry['releases'] as $r) {
+    foreach ($releases as $r) {
         if (preg_match($want['version'], $r['releaseVersion']) === 1) {
             $release = $r;
             break;
@@ -160,17 +182,17 @@ foreach (WANTED as $key => $want) {
     }
 
     echo "  {$key}: {$want['name']} @ {$release['releaseVersion']} [{$release['stage']}]\n";
-    foreach (newer_releases($entry['releases'], $release['releaseVersion']) as $r) {
+    foreach (newer_releases(array_values($releases), $release['releaseVersion']) as $r) {
         fwrite(STDERR, "  ! {$key}: newer release {$r['releaseVersion']} [{$r['stage']}]\n");
         $outdated++;
     }
-    $spec = cached_json("{$key}@{$release['releaseVersion']}", $release['openApi']);
+    $spec = cached_json("collection-{$key}@{$release['releaseVersion']}-{$release['rollout']}", $release['openApi']);
     $paths = array_keys($spec['paths'] ?? []);
     sort($paths);
 
     $result[$key] = [
-        'group' => $entry['group'],
-        'name' => $entry['name'],
+        'group' => $want['group'],
+        'name' => $want['name'],
         'version' => $release['releaseVersion'],
         'stage' => $release['stage'],
         'openApi' => $release['openApi'],
@@ -181,7 +203,7 @@ foreach (WANTED as $key => $want) {
 file_put_contents(OUT_JSON, json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)."\n");
 
 $md = "# Verified HubSpot date-based paths\n\n"
-    ."Generated by `bin/pull-specs.php` from HubSpot's public OpenAPI spec catalog. "
+    ."Generated by `bin/pull-specs.php` from HubSpot's public OpenAPI spec collection. "
     ."These paths are read straight from HubSpot's own specs, not doc prose. "
     ."Regenerate after a HubSpot release. Do not hand-edit.\n\n"
     ."| Key | Version | Stage | Path count |\n|---|---|---|---|\n";

@@ -8,11 +8,12 @@ use HubSpot\Client;
 
 /**
  * Workflows (Flows) API, reached via $client->automation()->flows(). Versions
- * independently as 2026-09-beta, so it does not follow the client-wide default.
+ * independently as 2027-03-beta, so it does not follow the client-wide default.
+ * The v4 path prefix also applies to explicit version overrides.
  */
 final class Flows extends Resource
 {
-    public const VERSION = '2026-09-beta';
+    public const VERSION = '2027-03-beta';
 
     public function __construct(Client $client, ?string $version = null)
     {
@@ -25,7 +26,7 @@ final class Flows extends Resource
      */
     public function list(array $query = []): array|object
     {
-        return $this->client->request('GET', "/automation/{$this->version()}/flows", [
+        return $this->client->request('GET', "/automation/v4/{$this->version()}/flows", [
             'query' => $this->filterNull($query),
         ]);
     }
@@ -33,7 +34,7 @@ final class Flows extends Resource
     /** @return array<mixed>|object */
     public function get(string $flowId): array|object
     {
-        return $this->client->request('GET', "/automation/{$this->version()}/flows/{$flowId}");
+        return $this->client->request('GET', "/automation/v4/{$this->version()}/flows/{$flowId}");
     }
 
     /**
@@ -42,12 +43,12 @@ final class Flows extends Resource
      */
     public function batchRead(array $inputs): array|object
     {
-        return $this->batch("/automation/{$this->version()}/flows/batch/read", $inputs);
+        return $this->batch("/automation/v4/{$this->version()}/flows/batch/read", $inputs);
     }
 
     /** @return array<mixed>|object */
     public function actionTypes(): array|object
     {
-        return $this->client->request('GET', "/automation/{$this->version()}/action-types");
+        return $this->client->request('GET', "/automation/v4/{$this->version()}/action-types");
     }
 }

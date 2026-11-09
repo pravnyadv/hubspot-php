@@ -12,7 +12,7 @@ it('list() hits the beta-versioned base path with limit and no after', function 
     $result = $client->marketing()->forms()->list(50);
 
     $uri = $mock->getLastRequest()->getUri();
-    expect($uri->getPath())->toBe('/marketing/forms/2026-09-beta');
+    expect($uri->getPath())->toBe('/marketing/forms/2027-03-beta');
     parse_str($uri->getQuery(), $query);
     expect($query['limit'])->toBe('50');
     expect(isset($query['after']))->toBeFalse();
@@ -37,7 +37,7 @@ it('get() hits the beta-versioned path for a specific form id', function () {
 
     $result = $client->marketing()->forms()->get('form-xyz');
 
-    expect($mock->getLastRequest()->getUri()->getPath())->toBe('/marketing/forms/2026-09-beta/form-xyz');
+    expect($mock->getLastRequest()->getUri()->getPath())->toBe('/marketing/forms/2027-03-beta/form-xyz');
     expect($result['id'])->toBe('form-xyz');
 });
 

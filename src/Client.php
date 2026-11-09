@@ -43,7 +43,7 @@ final class Client
 {
     /**
      * Default date-based version for the CRM/account/CMS families. Not global:
-     * OAuth uses OAuthClient::DEFAULT_VERSION and Marketing Forms 2026-09-beta,
+     * OAuth uses OAuthClient::DEFAULT_VERSION and Marketing Forms 2027-03-beta,
      * each set on its own resource, because HubSpot versions API families
      * independently.
      */

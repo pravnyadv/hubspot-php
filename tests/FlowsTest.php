@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-it('flows() sends GET /automation/2026-09-beta/flows by default', function () {
+it('flows() sends GET /automation/v4/2027-03-beta/flows by default', function () {
     [$client, $mock] = mockClient([
         jsonResponse(200, ['results' => [['id' => 'flow-1']]]),
     ]);
@@ -11,7 +11,7 @@ it('flows() sends GET /automation/2026-09-beta/flows by default', function () {
 
     $request = $mock->getLastRequest();
     expect($request->getMethod())->toBe('GET');
-    expect($request->getUri()->getPath())->toBe('/automation/2026-09-beta/flows');
+    expect($request->getUri()->getPath())->toBe('/automation/v4/2027-03-beta/flows');
     expect($result)->toBe(['results' => [['id' => 'flow-1']]]);
 });
 
@@ -27,7 +27,7 @@ it('flows() passes query params and omits null values', function () {
     expect($query)->not->toHaveKey('after');
 });
 
-it('flow() sends GET /automation/2026-09-beta/flows/{flowId}', function () {
+it('flow() sends GET /automation/v4/2027-03-beta/flows/{flowId}', function () {
     [$client, $mock] = mockClient([
         jsonResponse(200, ['id' => 'flow-abc', 'name' => 'My Flow']),
     ]);
@@ -36,11 +36,11 @@ it('flow() sends GET /automation/2026-09-beta/flows/{flowId}', function () {
 
     $request = $mock->getLastRequest();
     expect($request->getMethod())->toBe('GET');
-    expect($request->getUri()->getPath())->toBe('/automation/2026-09-beta/flows/flow-abc');
+    expect($request->getUri()->getPath())->toBe('/automation/v4/2027-03-beta/flows/flow-abc');
     expect($result)->toBe(['id' => 'flow-abc', 'name' => 'My Flow']);
 });
 
-it('flowsBatchRead() sends POST /automation/2026-09-beta/flows/batch/read with inputs in the body', function () {
+it('flowsBatchRead() sends POST /automation/v4/2027-03-beta/flows/batch/read with inputs in the body', function () {
     [$client, $mock] = mockClient([
         jsonResponse(200, ['results' => [['id' => 'flow-1'], ['id' => 'flow-2']]]),
     ]);
@@ -50,13 +50,13 @@ it('flowsBatchRead() sends POST /automation/2026-09-beta/flows/batch/read with i
 
     $request = $mock->getLastRequest();
     expect($request->getMethod())->toBe('POST');
-    expect($request->getUri()->getPath())->toBe('/automation/2026-09-beta/flows/batch/read');
+    expect($request->getUri()->getPath())->toBe('/automation/v4/2027-03-beta/flows/batch/read');
     $body = json_decode((string) $request->getBody(), true);
     expect($body['inputs'])->toBe($inputs);
     expect($result)->toBe(['results' => [['id' => 'flow-1'], ['id' => 'flow-2']]]);
 });
 
-it('actionTypes() sends GET /automation/2026-09-beta/action-types', function () {
+it('actionTypes() sends GET /automation/v4/2027-03-beta/action-types', function () {
     [$client, $mock] = mockClient([
         jsonResponse(200, ['results' => [['name' => 'send-email']]]),
     ]);
@@ -65,7 +65,7 @@ it('actionTypes() sends GET /automation/2026-09-beta/action-types', function () 
 
     $request = $mock->getLastRequest();
     expect($request->getMethod())->toBe('GET');
-    expect($request->getUri()->getPath())->toBe('/automation/2026-09-beta/action-types');
+    expect($request->getUri()->getPath())->toBe('/automation/v4/2027-03-beta/action-types');
     expect($result)->toBe(['results' => [['name' => 'send-email']]]);
 });
 
@@ -76,5 +76,5 @@ it('version override changes the date segment in the path', function () {
 
     $client->automation()->flows('2026-03')->list();
 
-    expect($mock->getLastRequest()->getUri()->getPath())->toBe('/automation/2026-03/flows');
+    expect($mock->getLastRequest()->getUri()->getPath())->toBe('/automation/v4/2026-03/flows');
 });

@@ -4,7 +4,7 @@
         "name": "Custom Objects",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/165137/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Custom%20Objects/Rollouts/321895/2026-09/customObjects.json",
         "paths": [
             "/crm/objects/2026-09/{objectType}",
             "/crm/objects/2026-09/{objectType}/batch/archive",
@@ -23,10 +23,9 @@
         "name": "Lists",
         "version": "2026-09",
         "stage": "PUBLIC_BETA",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/184424/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Lists/Rollouts/327894/2026-09/lists.json",
         "paths": [
             "/crm/lists/2026-09",
-            "/crm/lists/2026-09/all",
             "/crm/lists/2026-09/folders",
             "/crm/lists/2026-09/folders/move-list",
             "/crm/lists/2026-09/folders/{folderId}",
@@ -56,7 +55,7 @@
         "name": "Crm Owners",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211252/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Crm%20Owners/Rollouts/146888/2026-09/crmOwners.json",
         "paths": [
             "/crm/owners/2026-09",
             "/crm/owners/2026-09/{ownerId}"
@@ -67,7 +66,7 @@
         "name": "Properties",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211231/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Properties/Rollouts/145899/2026-09/properties.json",
         "paths": [
             "/crm/properties/2026-09/{objectType}",
             "/crm/properties/2026-09/{objectType}/batch/archive",
@@ -83,7 +82,7 @@
         "name": "Account Info",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/138942/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Account/Account%20Info/Rollouts/318954/2026-09/accountInfo.json",
         "paths": [
             "/account-info/2026-09/api-usage/daily/private-apps",
             "/account-info/2026-09/details"
@@ -92,12 +91,12 @@
     "forms": {
         "group": "Marketing",
         "name": "Forms",
-        "version": "2026-09-beta",
-        "stage": "PUBLIC_BETA",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/75368/version/2026-09-beta",
+        "version": "2027-03-beta",
+        "stage": "UNLISTED",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Marketing/Forms/Rollouts/144909/2027-03-beta/forms.json",
         "paths": [
-            "/marketing/forms/2026-09-beta",
-            "/marketing/forms/2026-09-beta/{formId}"
+            "/marketing/forms/2027-03-beta",
+            "/marketing/forms/2027-03-beta/{formId}"
         ]
     },
     "cms-pages": {
@@ -105,7 +104,7 @@
         "name": "Pages",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211242/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CMS/Pages/Rollouts/59888/2026-09/pages.json",
         "paths": [
             "/cms/pages/2026-09/landing-pages",
             "/cms/pages/2026-09/landing-pages/ab-test/create-variation",
@@ -169,7 +168,7 @@
         "name": "Source Code",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211245/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CMS/Source%20Code/Rollouts/140886/2026-09/sourceCode.json",
         "paths": [
             "/cms/source-code/2026-09/extract/async",
             "/cms/source-code/2026-09/extract/async/tasks/{taskId}/status",
@@ -183,7 +182,7 @@
         "name": "Associations",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/165139/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Associations/Rollouts/321895/2026-09/associations.json",
         "paths": [
             "/crm/associations/2026-09/definitions/configurations/all",
             "/crm/associations/2026-09/definitions/configurations/{fromObjectType}/{toObjectType}",
@@ -218,7 +217,7 @@
         "name": "Timeline",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211262/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Timeline/Rollouts/147898/2026-09/timeline.json",
         "paths": [
             "/integrators/timeline/2026-09/events",
             "/integrators/timeline/2026-09/events/batch",
@@ -230,7 +229,7 @@
         "name": "Pipelines",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/165192/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Pipelines/Rollouts/321972/2026-09/pipelines.json",
         "paths": [
             "/crm/pipelines/2026-09/{objectType}",
             "/crm/pipelines/2026-09/{objectType}/{pipelineId}",
@@ -245,7 +244,7 @@
         "name": "Schemas",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211261/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Schemas/Rollouts/145900/2026-09/schemas.json",
         "paths": [
             "/crm-object-schemas/2026-09/schemas",
             "/crm-object-schemas/2026-09/schemas/batch/read",
@@ -259,7 +258,7 @@
         "name": "Files",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/143236/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Files/Files/Rollouts/319002/2026-09/files.json",
         "paths": [
             "/files/2026-09/files",
             "/files/2026-09/files/import-from-url/async",
@@ -281,7 +280,7 @@
         "name": "Subscriptions",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211265/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Communication%20Preferences/Subscriptions/Rollouts/176901/2026-09/subscriptions.json",
         "paths": [
             "/communication-preferences/2026-09/definitions",
             "/communication-preferences/2026-09/links/generate",
@@ -298,7 +297,7 @@
         "name": "Conversations",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/75320/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Conversations/Conversations/Rollouts/338925/2026-09/conversations.json",
         "paths": [
             "/conversations/conversations/2026-09/actors/batch/read",
             "/conversations/conversations/2026-09/actors/{actorId}",
@@ -319,17 +318,17 @@
     "automation": {
         "group": "Automation",
         "name": "Automation V4",
-        "version": "2026-09-beta",
+        "version": "2027-03-beta",
         "stage": "PUBLIC_BETA",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/75354/version/2026-09-beta",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Automation/Automation%20V4/Rollouts/144908/2027-03-beta/automationV4.json",
         "paths": [
-            "/automation/2026-09-beta/action-types",
-            "/automation/2026-09-beta/flows",
-            "/automation/2026-09-beta/flows/batch/read",
-            "/automation/2026-09-beta/flows/email-campaigns",
-            "/automation/2026-09-beta/flows/{flowId}",
-            "/automation/2026-09-beta/flows/{flowId}/revisions/{revisionId}",
-            "/automation/2026-09-beta/workflow-id-mappings/batch/read"
+            "/automation/v4/2027-03-beta/action-types",
+            "/automation/v4/2027-03-beta/flows",
+            "/automation/v4/2027-03-beta/flows/batch/read",
+            "/automation/v4/2027-03-beta/flows/email-campaigns",
+            "/automation/v4/2027-03-beta/flows/{flowId}",
+            "/automation/v4/2027-03-beta/flows/{flowId}/revisions/{revisionId}",
+            "/automation/v4/2027-03-beta/workflow-id-mappings/batch/read"
         ]
     },
     "blog-posts": {
@@ -337,7 +336,7 @@
         "name": "Posts",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211243/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CMS/Posts/Rollouts/635/2026-09/posts.json",
         "paths": [
             "/cms/blogs/2026-09/authors/cursor",
             "/cms/blogs/2026-09/authors/cursor/query",
@@ -372,7 +371,7 @@
         "name": "Authors",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211237/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CMS/Authors/Rollouts/635/2026-09/authors.json",
         "paths": [
             "/cms/blogs/2026-09/authors",
             "/cms/blogs/2026-09/authors/batch/archive",
@@ -392,7 +391,7 @@
         "name": "Blog Settings",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211238/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CMS/Blog%20Settings/Rollouts/635/2026-09/blogSettings.json",
         "paths": [
             "/cms/blog-settings/2026-09/settings",
             "/cms/blog-settings/2026-09/settings/multi-language/attach-to-lang-group",
@@ -410,7 +409,7 @@
         "name": "Tags",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211246/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CMS/Tags/Rollouts/635/2026-09/tags.json",
         "paths": [
             "/cms/blogs/2026-09/authors/cursor",
             "/cms/blogs/2026-09/authors/cursor/query",
@@ -436,7 +435,7 @@
         "name": "Hubdb",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211250/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CMS/Hubdb/Rollouts/243927/2026-09/hubdb.json",
         "paths": [
             "/cms/hubdb/2026-09/tables",
             "/cms/hubdb/2026-09/tables/draft",
@@ -469,7 +468,7 @@
         "name": "Domains",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211240/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CMS/Domains/Rollouts/149894/2026-09/domains.json",
         "paths": [
             "/cms/domains/2026-09",
             "/cms/domains/2026-09/{domainId}"
@@ -480,7 +479,7 @@
         "name": "Url Redirects",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211248/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CMS/Url%20Redirects/Rollouts/149916/2026-09/urlRedirects.json",
         "paths": [
             "/cms/url-redirects/2026-09",
             "/cms/url-redirects/2026-09/url-mappings",
@@ -493,7 +492,7 @@
         "name": "Marketing Emails",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211277/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Marketing/Marketing%20Emails/Rollouts/145892/2026-09/marketingEmails.json",
         "paths": [
             "/marketing/emails/2026-09",
             "/marketing/emails/2026-09/ab-test/create-variation",
@@ -517,7 +516,7 @@
         "name": "Marketing Events",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211271/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Marketing/Marketing%20Events/Rollouts/129888/2026-09/marketingEvents.json",
         "paths": [
             "/marketing/marketing-events/2026-09",
             "/marketing/marketing-events/2026-09/associations/{externalAccountId}/{externalEventId}/lists",
@@ -554,7 +553,7 @@
         "name": "Campaigns Public Api",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/122230/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Marketing/Campaigns%20Public%20Api/Rollouts/310984/2026-09/campaignsPublicApi.json",
         "paths": [
             "/marketing/campaigns/2026-09",
             "/marketing/campaigns/2026-09/asset-types",
@@ -583,7 +582,7 @@
         "name": "Single-send",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211272/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Marketing/Single-send/Rollouts/106894/2026-09/singlesend.json",
         "paths": [
             "/marketing/email-campaigns/2026-09/single-send"
         ]
@@ -593,7 +592,7 @@
         "name": "Transactional Single Send",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211273/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Marketing/Transactional%20Single%20Send/Rollouts/140892/2026-09/transactionalSingleSend.json",
         "paths": [
             "/marketing/transactional/2026-09/single-email/send",
             "/marketing/transactional/2026-09/smtp-tokens",
@@ -606,7 +605,7 @@
         "name": "Actions V4",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211234/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Automation/Actions%20V4/Rollouts/148901/2026-09/actionsV4.json",
         "paths": [
             "/automation/actions/2026-09/{appId}",
             "/automation/actions/2026-09/{appId}/{definitionId}",
@@ -625,7 +624,7 @@
         "name": "Sequences",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/160272/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Automation/Sequences/Rollouts/321890/2026-09/sequences.json",
         "paths": [
             "/automation/sequences/2026-09",
             "/automation/sequences/2026-09/enrollments",
@@ -642,7 +641,7 @@
         "name": "Events",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211268/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Events/Events/Rollouts/147897/2026-09/events.json",
         "paths": [
             "/events/event-occurrences/2026-09",
             "/events/event-occurrences/2026-09/event-types"
@@ -653,7 +652,7 @@
         "name": "Manage Event Definitions",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211269/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Events/Manage%20Event%20Definitions/Rollouts/333895/2026-09/manageEventDefinitions.json",
         "paths": [
             "/events/2026-09/event-definitions",
             "/events/2026-09/event-definitions/{eventName}",
@@ -666,7 +665,7 @@
         "name": "Send Event Completions",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211270/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Events/Send%20Event%20Completions/Rollouts/669/2026-09/sendEventCompletions.json",
         "paths": [
             "/events/2026-09/send",
             "/events/2026-09/send/batch"
@@ -677,7 +676,7 @@
         "name": "Custom Channels",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211266/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Conversations/Custom%20Channels/Rollouts/160898/2026-09/customChannels.json",
         "paths": [
             "/conversations/custom-channels/2026-09",
             "/conversations/custom-channels/2026-09/{channelId}",
@@ -693,7 +692,7 @@
         "name": "Visitor Identification",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211267/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Conversations/Visitor%20Identification/Rollouts/140938/2026-09/visitorIdentification.json",
         "paths": [
             "/visitor-identification/2026-09/tokens/create"
         ]
@@ -703,7 +702,7 @@
         "name": "Payment Links",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/119657/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Commerce/Payment%20Links/Rollouts/310885/2026-09/paymentLinks.json",
         "paths": [
             "/commerce/payment-links/2026-09/payment-links",
             "/commerce/payment-links/2026-09/payment-links/{paymentLinkId}"
@@ -714,7 +713,7 @@
         "name": "Price Books",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/145621/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Commerce/Price%20Books/Rollouts/310989/2026-09/priceBooks.json",
         "paths": [
             "/commerce/price-books/2026-09/price-books",
             "/commerce/price-books/2026-09/price-books/{priceBookId}",
@@ -733,7 +732,7 @@
         "name": "Imports",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211255/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Imports/Rollouts/144903/2026-09/imports.json",
         "paths": [
             "/crm/imports/2026-09",
             "/crm/imports/2026-09/{importId}",
@@ -746,7 +745,7 @@
         "name": "Exports",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211254/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Exports/Rollouts/95922/2026-09/exports.json",
         "paths": [
             "/crm/exports/2026-09/export/async",
             "/crm/exports/2026-09/export/async/tasks/{taskId}/status",
@@ -758,7 +757,7 @@
         "name": "Users",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/165173/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Users/Rollouts/321895/2026-09/users.json",
         "paths": [
             "/crm/objects/2026-09/users",
             "/crm/objects/2026-09/users/batch/archive",
@@ -780,7 +779,7 @@
         "name": "Object Tags",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/172259/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/CRM/Object%20Tags/Rollouts/320931/2026-09/objectTags.json",
         "paths": [
             "/crm/object-tags/2026-09/{objectTypeId}",
             "/crm/object-tags/2026-09/{objectTypeId}/{tagId}"
@@ -791,7 +790,7 @@
         "name": "Teams",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/183672/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Settings/Teams/Rollouts/325899/2026-09/teams.json",
         "paths": [
             "/settings/teams/2026-09",
             "/settings/teams/2026-09/{teamId}",
@@ -805,7 +804,7 @@
         "name": "User Provisioning",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/179638/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Settings/User%20Provisioning/Rollouts/325901/2026-09/userProvisioning.json",
         "paths": [
             "/settings/users/2026-09",
             "/settings/users/2026-09/roles",
@@ -819,7 +818,7 @@
         "name": "Webhooks",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211276/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Webhooks/Webhooks/Rollouts/147891/2026-09/webhooks.json",
         "paths": [
             "/app-webhooks/2026-09/{appId}/settings",
             "/app-webhooks/2026-09/{appId}/subscriptions",
@@ -855,7 +854,7 @@
         "name": "Business Units",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211236/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Business%20Units/Business%20Units/Rollouts/140946/2026-09/businessUnits.json",
         "paths": [
             "/business-units/public/2026-09/business-units/user/{userId}"
         ]
@@ -865,7 +864,7 @@
         "name": "Meetings",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/216499/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Scheduler/Meetings/Rollouts/177892/2026-09/meetings.json",
         "paths": [
             "/scheduler/2026-09/meetings/calendar",
             "/scheduler/2026-09/meetings/meeting-links",
@@ -879,7 +878,7 @@
         "name": "Oauth",
         "version": "2026-09",
         "stage": "LIVE",
-        "openApi": "https://api.hubapi.com/public/api/spec/v2/specs/release/211233/version/2026-09",
+        "openApi": "https://raw.githubusercontent.com/HubSpot/HubSpot-public-api-spec-collection/main/PublicApiSpecs/Auth/Oauth/Rollouts/279897/2026-09/oauth.json",
         "paths": [
             "/oauth/2026-09/token",
             "/oauth/2026-09/token/introspect",
